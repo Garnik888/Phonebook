@@ -28,17 +28,17 @@ public class ContactStart {
                     System.exit(0);
                 case 1:
 
-                    commandService.create();
+                    commandService.create(phoneBook);
                     break;
                 case 2:
 
-                    commandService.getContact();
+                    commandService.getContact(phoneBook);
                     break;
                 case 3:
-                    commandService.update();
+                    commandService.update(phoneBook);
                     break;
                 case 4:
-                    commandService.delete();
+                    commandService.delete(phoneBook);
                     break;
                 default:
                     System.out.println("\n****Invalid command number****\n");

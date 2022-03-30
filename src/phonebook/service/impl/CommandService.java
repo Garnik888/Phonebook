@@ -28,8 +28,7 @@ public class CommandService implements Commands {
     }
 
     @Override
-    public void create() {
-
+    public void create(Map<String,Contact> map) {
         System.out.println("Input contact's name");
         name = in.next();
         createPhoneNumberMap();
@@ -43,20 +42,25 @@ public class CommandService implements Commands {
         } else {
             contact.getEmails().put(EmailType.EMPTY, "");
         }
+        map.put(name,contact);
     }
 
     @Override
-    public void getContact() {
+    public void getContact(Map<String,Contact> map) {
+        for (Map.Entry<String, Contact> stringContactEntry : map.entrySet()) {
+            System.out.println(stringContactEntry);
+        }
+
 
     }
 
     @Override
-    public void update() {
+    public void update(Map<String,Contact> map) {
 
     }
 
     @Override
-    public void delete() {
+    public void delete(Map<String,Contact> map) {
 
     }
 
