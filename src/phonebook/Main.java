@@ -1,6 +1,7 @@
 package phonebook;
 
 import phonebook.model.Contact;
+import phonebook.model.PhoneNumberType;
 import phonebook.service.impl.ContactStart;
 
 public class Main {
@@ -9,5 +10,6 @@ public class Main {
 
         ContactStart contactStart = new ContactStart();
         contactStart.start();
+
     }
 }

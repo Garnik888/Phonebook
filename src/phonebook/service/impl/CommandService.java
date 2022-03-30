@@ -11,6 +11,7 @@ import java.util.*;
 public class CommandService implements Commands {
     private Scanner in = new Scanner(System.in);
 
+
     private String name;
     private Contact contact=new Contact();
 
@@ -32,7 +33,7 @@ public class CommandService implements Commands {
         System.out.println("Input contact's name");
         name = in.next();
         createPhoneNumberMap();
-        System.out.print("Input company name or Enter -> ");
+        System.out.print("Input company name  -> ");
         String company = in.next();
         contact.setCompany(company);
         System.out.println("Do you want to add email?(YES/NO");
@@ -146,5 +147,13 @@ public class CommandService implements Commands {
         System.out.println("INPUT " + EmailType.GMAIL.ordinal() + " FOR GMAIL");
         System.out.println("INPUT " + EmailType.ICLOUD.ordinal() + " FOR ICLOUD");
         System.out.println("INPUT " + EmailType.OTHER.ordinal() + " FOR OTHER");
+    }
+
+    @Override
+    public String toString() {
+        return "CommandService{" +
+                "name='" + name + '\'' +
+                ", contact=" + contact.getPhoneNumbers() +contact.getEmails()+contact.getCompany()+
+                '}';
     }
 }
