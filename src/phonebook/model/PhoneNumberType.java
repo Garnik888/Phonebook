@@ -2,5 +2,9 @@ package phonebook.model;
 
 public enum PhoneNumberType {
 
-    MOBILE, HOME, WORK, SCHOOL
+    MOBILE,
+    HOME,
+    WORK,
+    SCHOOL,
+    OTHER;
 }

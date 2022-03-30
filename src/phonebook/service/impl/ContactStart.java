@@ -1,4 +1,4 @@
-package phonebook.service;
+package phonebook.service.impl;
 
 import phonebook.model.Contact;
 
@@ -13,9 +13,9 @@ public class ContactStart {
     public void start() {
 
         Map<String, Contact> phoneBook = new HashMap<>();
-        ContactService contactService = new ContactService();
+        CommandService commandService = new CommandService();
 
-        ContactService.printCommands();
+        CommandService.printCommands();
         System.out.print("\n*****Insert number of operation : -> ");
         int commandNum = in.nextInt();
 
@@ -28,17 +28,17 @@ public class ContactStart {
                     System.exit(0);
                 case 1:
 
-                    contactService.create();
+                    commandService.create();
                     break;
                 case 2:
 
-                    contactService.getContact();
+                    commandService.getContact();
                     break;
                 case 3:
-                    contactService.update();
+                    commandService.update();
                     break;
                 case 4:
-                    contactService.delete();
+                    commandService.delete();
                     break;
                 default:
                     System.out.println("\n****Invalid command number****\n");
@@ -49,7 +49,7 @@ public class ContactStart {
             String yes = in.next();
             if (yes.equalsIgnoreCase("yes")) {
 
-                ContactService.printCommands();
+                CommandService.printCommands();
             }
 
             System.out.print("\n*****Insert number of operation : -> ");

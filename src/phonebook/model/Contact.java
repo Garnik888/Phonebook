@@ -1,15 +1,17 @@
 package phonebook.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Contact {
 
     //Class fields
-    private String phoneNumbers;
-    private PhoneNumberType phoneNumberType;
-    private String company;
-    private String emails;
-    private EmailType emailType;
+
+    private Map<PhoneNumberType, String> phoneNumbers=new HashMap<>();
+    private String company = "";
+    private Map<EmailType, String> emails=new HashMap<>();
+
 
     /**
      * No argument constructor
@@ -20,35 +22,27 @@ public class Contact {
 
     /**
      * All arguments constructor
+     *
      * @param phoneNumbers
-     * @param phoneNumberType
      * @param company
      * @param emails
-     * @param emailType
      */
-    public Contact(String phoneNumbers, PhoneNumberType phoneNumberType, String company,
-                   String emails, EmailType emailType) {
+
+    public Contact(HashMap<PhoneNumberType, String> phoneNumbers, String company, HashMap<EmailType, String> emails) {
         this.phoneNumbers = phoneNumbers;
-        this.phoneNumberType = phoneNumberType;
         this.company = company;
         this.emails = emails;
-        this.emailType = emailType;
     }
 
-    public String getPhoneNumbers() {
+    /**
+     * @param phoneNumbers
+     */
+    public Map<PhoneNumberType, String> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(String phoneNumbers) {
+    public void setPhoneNumbers(Map<PhoneNumberType, String> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
-    }
-
-    public PhoneNumberType getPhoneNumberType() {
-        return phoneNumberType;
-    }
-
-    public void setPhoneNumberType(PhoneNumberType phoneNumberType) {
-        this.phoneNumberType = phoneNumberType;
     }
 
     public String getCompany() {
@@ -59,44 +53,33 @@ public class Contact {
         this.company = company;
     }
 
-    public String getEmails() {
+    public Map<EmailType, String> getEmails() {
         return emails;
     }
 
-    public void setEmails(String emails) {
+    public void setEmails(Map<EmailType, String> emails) {
         this.emails = emails;
-    }
-
-    public EmailType getEmailType() {
-        return emailType;
-    }
-
-    public void setEmailType(EmailType emailType) {
-        this.emailType = emailType;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Contact)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return Objects.equals(getPhoneNumbers(), contact.getPhoneNumbers()) && getPhoneNumberType() == contact.getPhoneNumberType() && Objects.equals(getCompany(), contact.getCompany()) && Objects.equals(getEmails(), contact.getEmails()) && getEmailType() == contact.getEmailType();
+        return Objects.equals(phoneNumbers, contact.phoneNumbers) && Objects.equals(company, contact.company) && Objects.equals(emails, contact.emails);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPhoneNumbers(), getPhoneNumberType(), getCompany(),
-                getEmails(), getEmailType());
+        return Objects.hash(phoneNumbers, company, emails);
     }
 
     @Override
     public String toString() {
         return "Contact{" +
-                "phoneNumbers='" + phoneNumbers + '\'' +
-                ", phoneNumberType=" + phoneNumberType +
+                "phoneNumbers=" + phoneNumbers +
                 ", company='" + company + '\'' +
-                ", emails='" + emails + '\'' +
-                ", emailType=" + emailType +
+                ", emails=" + emails +
                 '}';
     }
 }
