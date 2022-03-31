@@ -34,11 +34,46 @@ public class CommandService implements Commands {
 
         createPhoneNumberMap();
 
-        System.out.print("Input company name  -> ");
-        String company = in.next();
-        contact.setCompany(company);
+        while (true) {
+
+            System.out.print("Do you want create another phone number? (Y/N) -> ");
+            String yesNo = in.next();
+
+            if (yesNo.equalsIgnoreCase("y")) {
+
+                createPhoneNumberMap();
+            } else if (!yesNo.equalsIgnoreCase("n")) {
+
+                System.out.println("Wrong choose, input Y/N");
+            } else {
+
+                break;
+            }
+        }
 
         createEmailMap();
+
+        System.out.print("Do you want create company name? (Y/N) -> ");
+
+        while (true) {
+            String yesNo = in.next();
+
+            if (yesNo.equalsIgnoreCase("y")) {
+
+                System.out.print("Input company name  -> ");
+                String company = in.next();
+                contact.setCompany(company);
+            } if (yesNo.equalsIgnoreCase("y")) {
+
+                createPhoneNumberMap();
+            } else if (!yesNo.equalsIgnoreCase("n")) {
+
+                System.out.println("Wrong choose, input Y/N");
+            } else {
+
+                break;
+            }
+        }
 
         map.put(name, contact);
     }
@@ -56,10 +91,10 @@ public class CommandService implements Commands {
         id++;
         phoneNumberMap.put(id, phoneNumber);
 
-        System.out.print("Do you want to add phone number Type?(YES/NO) -> ");
+        System.out.print("Do you want to add phone number Type?(Y/N) -> ");
         String want1 = in.next();
 
-        if (want1.equalsIgnoreCase("yes")) {
+        if (want1.equalsIgnoreCase("y")) {
 
             printPhoneNumbersType();
             System.out.print(" \n-> ");
@@ -112,10 +147,10 @@ public class CommandService implements Commands {
         Map<Integer, String> emailMap = new HashMap<>();
         Integer id = 0;
 
-        System.out.println("Do you want to add email?(YES/NO) -> ");
+        System.out.print("Do you want to add email?(Y/N) -> ");
         String want = in.next();
 
-        if (want.equalsIgnoreCase("yes")) {
+        if (want.equalsIgnoreCase("y")) {
 
             System.out.print("Input email -> ");
             String email = in.next();
@@ -168,8 +203,9 @@ public class CommandService implements Commands {
         System.out.print("Input name -> ");
         String name = in.next();
 
-        System.out.println("------ CONTACTS------\n" + "\n---" + name + "---\n" + "Phone number's type ->" + map.get(name).getPhoneNumbers().keySet() +
-                "\nPhonnumber -> " + map.get(name).getPhoneNumbers().values() +
+        System.out.println("------ CONTACTS------\n" + "\n---" + name + "---\n" + "Phone number's type ->"
+                + map.get(name).getPhoneNumbers().keySet() +
+                "\nPhone number -> " + map.get(name).getPhoneNumbers().values() +
                 "\nCompany ->" + contact.getCompany() + "\nEmail's type ->"
                 + map.get(name).getEmails().keySet()
                 + "\nEmail ->" + map.get(name).getEmails().values());
@@ -182,10 +218,15 @@ public class CommandService implements Commands {
 
     }
 
+    /**
+     * Delete contact
+     *
+     * @param map HashMap<> type
+     */
     @Override
     public void delete(Map<String, Contact> map) {
-        boolean flag = true;
-        while (flag) {
+
+        while (true) {
 
             System.out.print("Input contact's name which you want to delete -> ");
             String name = in.next();
@@ -197,14 +238,18 @@ public class CommandService implements Commands {
 
                 name = in.next();
             }
-                System.out.println("Are you sure (yes/no) -> ");
-                String nameDel = in.next();
-                if (nameDel.equalsIgnoreCase("yes")) {
-                    map.remove(name);
-                    System.out.print("The contact is deleted.");
-                }
-                flag = false;
+
+            System.out.println("Are you sure (Y/N) -> ");
+            String nameDel = in.next();
+
+            if (nameDel.equalsIgnoreCase("y")) {
+
+                map.remove(name);
+                System.out.print("The contact is deleted.");
             }
+
+            return;
+        }
 
     }
 

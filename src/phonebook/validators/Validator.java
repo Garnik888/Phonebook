@@ -9,6 +9,7 @@ public class Validator {
             try {
                 Long l = Long.parseLong(phoneNumber.substring(1));
             } catch (NumberFormatException nfe) {
+                System.out.println("Incorrect phone number");
                 return false;
             }
             return true;
@@ -16,6 +17,7 @@ public class Validator {
             try {
                 Long l = Long.parseLong(phoneNumber);
             } catch (NumberFormatException nfe) {
+                System.out.println("Incorrect phone number");
                 return false;
             }
             return true;
