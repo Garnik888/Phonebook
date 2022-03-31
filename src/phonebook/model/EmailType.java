@@ -2,5 +2,8 @@ package phonebook.model;
 
 public enum EmailType {
 
-    GMAIL,ICLOUD, OTHER, EMPTY
+    GMAIL,
+    ICLOUD,
+    OTHER,
+    EMPTY
 }

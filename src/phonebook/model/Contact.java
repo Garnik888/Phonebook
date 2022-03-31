@@ -7,11 +7,9 @@ import java.util.Objects;
 public class Contact {
 
     //Class fields
-
-    private Map<PhoneNumberType, String> phoneNumbers=new HashMap<>();
+    private Map<PhoneNumberType, Map<Integer, String>> phoneNumbers = new HashMap<>();
     private String company = "";
-    private Map<EmailType, String> emails=new HashMap<>();
-
+    private Map<EmailType, Map<Integer, String>> emails = new HashMap<>();
 
     /**
      * No argument constructor
@@ -27,21 +25,18 @@ public class Contact {
      * @param company
      * @param emails
      */
-
-    public Contact(HashMap<PhoneNumberType, String> phoneNumbers, String company, HashMap<EmailType, String> emails) {
+    public Contact(Map<PhoneNumberType, Map<Integer, String>> phoneNumbers, String company,
+                   Map<EmailType, Map<Integer, String>> emails) {
         this.phoneNumbers = phoneNumbers;
         this.company = company;
         this.emails = emails;
     }
 
-    /**
-     * @param phoneNumbers
-     */
-    public Map<PhoneNumberType, String> getPhoneNumbers() {
+    public Map<PhoneNumberType, Map<Integer, String>> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(Map<PhoneNumberType, String> phoneNumbers) {
+    public void setPhoneNumbers(Map<PhoneNumberType, Map<Integer, String>> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 
@@ -53,11 +48,11 @@ public class Contact {
         this.company = company;
     }
 
-    public Map<EmailType, String> getEmails() {
+    public Map<EmailType, Map<Integer, String>> getEmails() {
         return emails;
     }
 
-    public void setEmails(Map<EmailType, String> emails) {
+    public void setEmails(Map<EmailType, Map<Integer, String>> emails) {
         this.emails = emails;
     }
 
@@ -66,9 +61,9 @@ public class Contact {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return Objects.equals(phoneNumbers, contact.phoneNumbers) && Objects.equals(company, contact.company) && Objects.equals(emails, contact.emails);
+        return Objects.equals(phoneNumbers, contact.phoneNumbers) && Objects.equals(company, contact.company)
+                && Objects.equals(emails, contact.emails);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(phoneNumbers, company, emails);
@@ -76,10 +71,9 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "phoneNumbers=" + phoneNumbers +
-                ", company='" + company + '\'' +
-                ", emails=" + emails +
-                '}';
+        return "Contacts info : " +
+                "Phone numbers : " + phoneNumbers.keySet() + " - " + phoneNumbers.entrySet() +
+                "\nCompany name : " + company +
+                "\nEmails : " + emails.keySet() + " - " + emails.values();
     }
 }

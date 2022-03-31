@@ -45,8 +45,8 @@ public class ContactStart {
             }
 
             System.out.print("Insert YES/NO if you want view commands list : -> ");
-
             String yes = in.next();
+
             if (yes.equalsIgnoreCase("yes")) {
 
                 CommandService.printCommands();
@@ -54,6 +54,9 @@ public class ContactStart {
 
             System.out.print("\n*****Insert number of operation : -> ");
             commandNum = in.nextInt();
+
+
+
         }
     }
 
