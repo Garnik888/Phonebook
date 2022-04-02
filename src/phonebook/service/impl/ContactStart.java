@@ -1,5 +1,6 @@
 package phonebook.service.impl;
 
+import org.w3c.dom.ls.LSOutput;
 import phonebook.model.Contact;
 
 import java.util.*;
@@ -10,7 +11,9 @@ public class ContactStart {
     private String name;
     private Scanner in = new Scanner(System.in);
 
+
     public void start() {
+
 
         Map<String, Contact> phoneBook = new HashMap<>();
         CommandService commandService = new CommandService();

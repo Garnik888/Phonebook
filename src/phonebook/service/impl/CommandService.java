@@ -31,7 +31,7 @@ public class CommandService implements Commands {
     public void create(Map<String, Contact> map) {
 
         System.out.print("Input contact's name -> ");
-        name = in.next();
+        String name = in.next();
 
         createPhoneNumberSet();
 
@@ -85,6 +85,7 @@ public class CommandService implements Commands {
         Set<String> phoneNumberSet = new HashSet<>();
         System.out.print("Input phone number -> ");
         String phoneNumber = in.next();
+
         phoneNumberSet.add(phoneNumber);
 
         System.out.print("Do you want to add phone number Type?(Y/N) -> ");
@@ -119,6 +120,8 @@ public class CommandService implements Commands {
                         System.out.println("Invalid type number.");
                         break;
                 }
+
+                break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.print("Wrong choose, input Y/N -> ");
@@ -137,8 +140,7 @@ public class CommandService implements Commands {
      * @param phoneNumberSet Set<String> type
      * @param phoneNumber    String type
      */
-    private void phoneNumberMapBuilder(PhoneNumberType type, Set<String> phoneNumberSet,
-                                       String phoneNumber) {
+    private void phoneNumberMapBuilder(PhoneNumberType type, Set<String> phoneNumberSet, String phoneNumber) {
 
         if (!contact.getPhoneNumbers().containsKey(type)) {
             contact.getPhoneNumbers().put(type, phoneNumberSet);
@@ -185,7 +187,6 @@ public class CommandService implements Commands {
 
                 switch (typeNumber) {
                     case 0:
-
                         emailMapBuilder(EmailType.GMAIL, emailSet, email);
                         break;
                     case 1:
@@ -198,6 +199,7 @@ public class CommandService implements Commands {
                         System.out.println("Invalid type number.");
                         break;
                 }
+                break;
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
@@ -250,9 +252,9 @@ public class CommandService implements Commands {
         System.out.print("Input name -> ");
         String name = in.next();
 
-        System.out.println("------ CONTACTS------\n" + "\n---" + name + "---\n" + "Phone number's type ->" + map.get(name).getPhoneNumbers().keySet() + "\nPhone number -> " + map.get(name).getPhoneNumbers().values() + "\nCompany ->" + contact.getCompany() + "\nEmail's type ->" + map.get(name).getEmails().keySet() + "\nEmail ->" + map.get(name).getEmails().values());
-
-
+        System.out.println("------ CONTACTS------\n" + "\n---" + name + "---\n"
+                + "Phone number(s) ->" + contact.getPhoneNumbers() + "\nCompany ->"
+                + contact.getCompany() + "\nEmail(s) ->" + contact.getEmails());
     }
 
     @Override
@@ -338,13 +340,13 @@ public class CommandService implements Commands {
     private void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String, Contact> map) {
 
         System.out.println(map.get(name).getPhoneNumbers().get(type));
-        System.out.println("Input phone number which one do you want to update. -> ");
+        System.out.print("Input phone number which one do you want to update. -> ");
         String phoneNumber = in.next();
-        while (contact.getPhoneNumbers().get(type).contains(phoneNumber)) {
-            System.out.println("Input right phone number!");
+        while (!contact.getPhoneNumbers().get(type).contains(phoneNumber)) {
+            System.out.print("Input right phone number! -> ");
             phoneNumber = in.next();
         }
-        System.out.println("Input new phone number. -> ");
+        System.out.print("Input new phone number. -> ");
         String newPhoneNumber = in.next();
         map.get(name).getPhoneNumbers().get(type).remove(phoneNumber);
         map.get(name).getPhoneNumbers().get(type).add(newPhoneNumber);
@@ -387,14 +389,14 @@ public class CommandService implements Commands {
      */
     private void emailUpdateCase(String name, EmailType type, Map<String, Contact> map) {
         System.out.println(map.get(name).getEmails().get(type));
-        System.out.println("Input email which one do you want to update. -> ");
+        System.out.print("Input email which one do you want to update. -> ");
         String email = in.next();
 
-        while (contact.getEmails().get(type).contains(email)) {
-            System.out.println("Input right email!");
+        while (!contact.getEmails().get(type).contains(email)) {
+            System.out.print("Input right email! -> ");
             email = in.next();
         }
-        System.out.println("Input new email. -> ");
+        System.out.print("Input new email. -> ");
         String newEmail = in.next();
         map.get(name).getEmails().get(type).remove(email);
         map.get(name).getEmails().get(type).add(newEmail);
