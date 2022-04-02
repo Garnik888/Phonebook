@@ -4,6 +4,5 @@ public enum EmailType {
 
     GMAIL,
     ICLOUD,
-    OTHER,
-    EMPTY
+    OTHER
 }

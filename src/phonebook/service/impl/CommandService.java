@@ -7,6 +7,7 @@ import phonebook.service.Commands;
 import phonebook.service.CommandsEnum;
 import phonebook.service.UpdateCommandsEnum;
 
+import javax.swing.*;
 import java.util.*;
 
 public class CommandService implements Commands {
@@ -30,14 +31,14 @@ public class CommandService implements Commands {
     @Override
     public void create(Map<String, Contact> map) {
 
-        System.out.print("\u001B[34m"+"Input contact's name -> ");
+        System.out.print("\u001B[34m" + "Input contact's name -> ");
         String name = in.next();
 
         createPhoneNumberSet();
 
         while (true) {
 
-            System.out.print("\u001B[34m"+"Do you want create another phone number? (Y/N) -> ");
+            System.out.print("\u001B[34m" + "Do you want create another phone number? (Y/N) -> ");
             String yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
@@ -45,7 +46,7 @@ public class CommandService implements Commands {
                 createPhoneNumberSet();
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
-                System.out.println("\u001B[31m"+"Wrong choose, input Y/N");
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
 
                 break;
@@ -54,20 +55,21 @@ public class CommandService implements Commands {
 
         createEmailSet();
 
-        System.out.print("\u001B[34m"+"Do you want create company name? (Y/N) -> ");
+        System.out.print("\u001B[34m" + "Do you want create company name? (Y/N) -> ");
 
         while (true) {
             String yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                System.out.print("\u001B[34m"+"Input company name  -> ");
+                System.out.print("\u001B[34m" + "Input company name  -> ");
                 String company = in.next();
+
                 contact.setCompany(company);
                 break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
-                System.out.println("\u001B[31m"+"Wrong choose, input Y/N");
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
 
                 break;
@@ -83,12 +85,12 @@ public class CommandService implements Commands {
     private void createPhoneNumberSet() {
 
         Set<String> phoneNumberSet = new HashSet<>();
-        System.out.print("\u001B[34m"+"Input phone number -> ");
+        System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
 
         phoneNumberSet.add(phoneNumber);
 
-        System.out.print("\u001B[34m"+"Do you want to add phone number Type?(Y/N) -> ");
+        System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");
 
         while (true) {
 
@@ -117,14 +119,14 @@ public class CommandService implements Commands {
                         phoneNumberMapBuilder(PhoneNumberType.OTHER, phoneNumberSet, phoneNumber);
                         break;
                     default:
-                        System.out.println("\u001B[31m"+"Invalid type number.");
+                        System.out.println("\u001B[31m" + "Invalid type number.");
                         break;
                 }
 
                 break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
-                System.out.print("\u001B[31m"+"Wrong choose, input Y/N -> ");
+                System.out.print("\u001B[31m" + "Wrong choose, input Y/N -> ");
             } else {
 
                 phoneNumberMapBuilder(PhoneNumberType.OTHER, phoneNumberSet, phoneNumber);
@@ -156,11 +158,11 @@ public class CommandService implements Commands {
     private void printPhoneNumbersType() {
         System.out.println("\"\\u001B[34m\"+Choose phone number TYPE otherwise input 9\n");
 
-        System.out.println("\u001B[32m"+"INPUT " + PhoneNumberType.MOBILE.ordinal() + " FOR MOBILE");
+        System.out.println("\u001B[32m" + "INPUT " + PhoneNumberType.MOBILE.ordinal() + " FOR MOBILE");
         System.out.println("INPUT " + PhoneNumberType.HOME.ordinal() + " FOR HOME");
         System.out.println("INPUT " + PhoneNumberType.WORK.ordinal() + " FOR WORK");
         System.out.println("INPUT " + PhoneNumberType.SCHOOL.ordinal() + " FOR SCHOOL");
-        System.out.print("INPUT " + PhoneNumberType.OTHER.ordinal() + " FOR OTHER"+"\u001B[0m");
+        System.out.print("INPUT " + PhoneNumberType.OTHER.ordinal() + " FOR OTHER" + "\u001B[0m");
     }
 
     /**
@@ -168,7 +170,7 @@ public class CommandService implements Commands {
      */
     private void createEmailSet() {
 
-        System.out.print("\u001B[34m"+"Do you want to add email?(Y/N) -> ");
+        System.out.print("\u001B[34m" + "Do you want to add email?(Y/N) -> ");
         Set<String> emailSet = new HashSet<>();
 
         while (true) {
@@ -176,7 +178,7 @@ public class CommandService implements Commands {
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                System.out.print("\u001B[34m"+"Input email -> ");
+                System.out.print("\u001B[34m" + "Input email -> ");
                 String email = in.next();
 
                 emailSet.add(email);
@@ -196,14 +198,14 @@ public class CommandService implements Commands {
                         emailMapBuilder(EmailType.OTHER, emailSet, email);
                         break;
                     default:
-                        System.out.println("\u001B[31m"+"Invalid type number.");
+                        System.out.println("\u001B[31m" + "Invalid type number.");
                         break;
                 }
                 break;
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
-                System.out.println("\u001B[31m"+"Wrong choose, input Y/N");
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
 
                 emailMapBuilder(EmailType.OTHER, emailSet, "--------");
@@ -244,20 +246,19 @@ public class CommandService implements Commands {
     @Override
     public void getContact(Map<String, Contact> map) {
         Map<String, Contact> map1 = new TreeMap<>(map);
-        String name = null;
+
         for (Map.Entry<String, Contact> contactName : map1.entrySet()) {
             System.out.println(contactName.getKey());
-            System.out.print("\u001B[34m"+"Input name -> ");
-             name = in.next();
-            while(!name.equalsIgnoreCase(contactName.getKey())){
-                System.out.println("\u001B[31m"+"Invalid name: input right name -> ");
-                name = in.next();
-            }
+        }
+        System.out.print("\u001B[34m" + "Input name -> ");
+        String name = in.next();
+
+        while (!map.containsKey(name)) {
+            System.out.print("\u001B[31m" + "Wrong name: input right name ->");
+            name = in.next();
         }
 
-
-      
-        System.out.println("\u001B[33m"+"------ CONTACTS------\n" + "\n---" + name + "---\n"
+        System.out.println("\u001B[33m" + "------ CONTACTS------\n" + "\n---" + name + "---\n"
                 + "Phone number(s) ->" + contact.getPhoneNumbers() + "\nCompany ->"
                 + contact.getCompany() + "\nEmail(s) ->" + contact.getEmails());
     }
@@ -265,10 +266,17 @@ public class CommandService implements Commands {
     @Override
     public void update(Map<String, Contact> map) {
 
-        System.out.println("\u001B[34m"+"Input Contact name which you want to update: -> ");
+        Map<String, Contact> map1 = new TreeMap<>(map);
+
+        for (Map.Entry<String, Contact> contactName : map1.entrySet()) {
+            System.out.println(contactName.getKey());
+        }
+
+        System.out.print("\u001B[34m" + "Input Contact name which you want to update: -> ");
         String name = in.next();
+
         while (!map.containsKey(name)) {
-            System.out.println("\u001B[31m"+"Not found contact by this name. Try again! -> ");
+            System.out.println("\u001B[31m" + "Not found contact by this name. Try again! -> ");
             name = in.next();
         }
 
@@ -277,34 +285,310 @@ public class CommandService implements Commands {
 
         printUpdateType();
 
-        System.out.println("\u001B[34m"+"Choose number of operation which do you want to update?");
+        System.out.println("\u001B[34m" + "Choose number of operation which do you want to update?");
         int choice = in.nextInt();
 
 
         switch (choice) {
             case 0:
-                System.out.println("\u001B[34m"+"Input contact's new name. ->");
+                System.out.println("\u001B[34m" + "Input contact's new name. ->");
                 String newName = in.next();
                 map.put(newName, map.get(name));
                 map.remove(name);
-                System.out.println("\u001B[36m"+ "The contact's name is updated.");
+                System.out.println("\u001B[36m" + "The contact's name is updated.");
                 break;
             case 1:
                 phoneNumberUpdate(name, map);
-                System.out.println("\u001B[36m"+ "The contact's phone number is updated.");
+                System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                 break;
             case 2:
-                emailUpdate(name, map);
-                System.out.println("\u001B[36m"+"The contact's email is updated.");
-                break;
+                System.out.println("\u001B[36m" + "If tou want delete ALL phone typ input 0");
+                System.out.println("\u001B[36m" + "If tou want delete phone number input 1");
+
+                while (true) {
+
+                    int del = in.nextInt();
+
+                    if (del == 1) {
+
+                        printPhoneNumbersType();
+
+
+                        while (true) {
+                            System.out.print(" \n-> ");
+                            int typeNumber = in.nextInt();
+
+                            switch (typeNumber) {
+                                case 0:
+                                    if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.MOBILE)) {
+                                        contact.getPhoneNumbers().remove(PhoneNumberType.MOBILE);
+                                    }
+                                    break;
+                                case 1:
+                                    if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.HOME)) {
+                                        contact.getPhoneNumbers().remove(PhoneNumberType.HOME);
+                                    }
+                                    break;
+                                case 2:
+                                    if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.WORK)) {
+                                        contact.getPhoneNumbers().remove(PhoneNumberType.WORK);
+                                    }
+                                    break;
+                                case 3:
+                                    if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.SCHOOL)) {
+                                        contact.getPhoneNumbers().remove(PhoneNumberType.SCHOOL);
+                                    }
+                                    break;
+                                case 4:
+                                    if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.OTHER)) {
+                                        contact.getPhoneNumbers().remove(PhoneNumberType.OTHER);
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("\u001B[31m" + "Invalid type number.");
+                                    continue;
+                            }
+                            break;
+                        }
+
+                    } else if (del == 2) {
+
+                        System.out.println(contact.getPhoneNumbers());
+                        System.out.print("Choose phone numbers type");
+                        printPhoneNumbersType();
+
+                        while (true) {
+                            System.out.print(" \n-> ");
+                            int typeNumber = in.nextInt();
+
+                            switch (typeNumber) {
+                                case 0:
+                                    while (true) {
+
+                                        System.out.print("Input phone numbers -> ");
+                                        String number = in.next();
+                                        if (!contact.getPhoneNumbers().get(PhoneNumberType.MOBILE).contains(number)) {
+
+                                            contact.getPhoneNumbers().get(PhoneNumberType.MOBILE).remove(number);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 1:
+                                    while (true) {
+
+                                        System.out.print("Input phone numbers -> ");
+                                        String number = in.next();
+                                        if (!contact.getPhoneNumbers().get(PhoneNumberType.HOME).contains(number)) {
+
+                                            contact.getPhoneNumbers().get(PhoneNumberType.HOME).remove(number);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 2:
+                                    while (true) {
+
+                                        System.out.print("Input phone numbers -> ");
+                                        String number = in.next();
+                                        if (!contact.getPhoneNumbers().get(PhoneNumberType.WORK).contains(number)) {
+
+                                            contact.getPhoneNumbers().get(PhoneNumberType.WORK).remove(number);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 3:
+                                    while (true) {
+
+                                        System.out.print("Input phone numbers -> ");
+                                        String number = in.next();
+                                        if (!contact.getPhoneNumbers().get(PhoneNumberType.SCHOOL).contains(number)) {
+
+                                            contact.getPhoneNumbers().get(PhoneNumberType.SCHOOL).remove(number);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 4:
+                                    while (true) {
+
+                                        System.out.print("Input phone numbers -> ");
+                                        String number = in.next();
+                                        if (!contact.getPhoneNumbers().get(PhoneNumberType.OTHER).contains(number)) {
+
+                                            contact.getPhoneNumbers().get(PhoneNumberType.OTHER).remove(number);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("\u001B[31m" + "Invalid type number.");
+                                    continue;
+                            }
+
+                            break;
+                        }
+
+                        break;
+                    }
+                }
             case 3:
-                System.out.println("\u001B[34m"+"Input company's new name. ->");
+                emailUpdate(name, map);
+                System.out.println("\u001B[36m" + "The contact's email is updated.");
+                break;
+            case 4:
+                System.out.println("\u001B[36m" + "If tou want delete ALL email typ input 0");
+                System.out.println("\u001B[36m" + "If tou want delete email input 1");
+
+                while (true) {
+
+                    int del = in.nextInt();
+
+                    if (del == 1) {
+
+                        printEmailType();
+
+                        while (true) {
+                            System.out.print(" \n-> ");
+                            int typeEmail = in.nextInt();
+
+                            switch (typeEmail) {
+                                case 0:
+                                    if (!contact.getEmails().containsKey(EmailType.GMAIL)) {
+                                        contact.getEmails().remove(EmailType.GMAIL);
+                                    }
+                                    break;
+                                case 1:
+                                    if (!contact.getEmails().containsKey(EmailType.ICLOUD)) {
+                                        contact.getEmails().remove(EmailType.ICLOUD);
+                                    }
+                                    break;
+                                case 2:
+                                    if (!contact.getEmails().containsKey(EmailType.OTHER)) {
+                                        contact.getEmails().remove(EmailType.OTHER);
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("\u001B[31m" + "Invalid type number.");
+                                    continue;
+                            }
+                            break;
+                        }
+
+                    } else if (del == 2) {
+
+                        System.out.println(contact.getEmails());
+                        System.out.print("Choose email type");
+                        printEmailType();
+
+                        while (true) {
+                            System.out.print(" \n-> ");
+                            int typeNumber = in.nextInt();
+
+                            switch (typeNumber) {
+                                case 0:
+                                    while (true) {
+
+                                        System.out.print("Input email -> ");
+                                        String email = in.next();
+                                        if (!contact.getEmails().get(EmailType.GMAIL).contains(email)) {
+
+                                            contact.getEmails().get(EmailType.GMAIL).remove(email);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 1:
+                                    while (true) {
+
+                                        System.out.print("Input email -> ");
+                                        String email = in.next();
+                                        if (!contact.getEmails().get(EmailType.ICLOUD).contains(email)) {
+
+                                            contact.getEmails().get(EmailType.ICLOUD).remove(email);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+                                case 2:
+                                    while (true) {
+
+                                        System.out.print("Input email -> ");
+                                        String email = in.next();
+                                        if (!contact.getEmails().get(EmailType.OTHER).contains(email)) {
+
+                                            contact.getEmails().get(EmailType.OTHER).remove(email);
+
+                                            break;
+                                        } else {
+
+                                            System.out.println("Incorrect number");
+                                        }
+
+                                    }
+                                    break;
+
+                                default:
+                                    System.out.println("\u001B[31m" + "Invalid type number.");
+                                    continue;
+                            }
+
+                            break;
+                        }
+                        break;
+                    }
+                }
+
+                break;
+            case 5:
+                System.out.println("\u001B[34m" + "Input company's new name. ->");
                 String newCompany = in.next();
                 contact.setCompany(newCompany);
-                System.out.println("\u001B[36m"+"The contact's company name is updated.");
+                System.out.println("\u001B[36m" + "The contact's company name is updated.");
+                break;
+            case 6:
+                System.out.println("\u001B[34m" + "Input company's new name. ->");
+                String company = in.next();
+                contact.setCompany(null);
                 break;
             default:
-                System.out.println("\u001B[31m"+"Invalid choice. Input right number!");
+                System.out.println("\u001B[31m" + "Invalid choice. Input right number!");
                 break;
         }
     }
@@ -315,7 +599,7 @@ public class CommandService implements Commands {
      */
     private void phoneNumberUpdate(String name, Map<String, Contact> map) {
 
-        System.out.println("\u001B[34m"+"Choose phone number type.");
+        System.out.println("\u001B[34m" + "Choose phone number type.");
         printPhoneNumbersType();
         System.out.print(" \n-> ");
         int typeNumber = in.nextInt();
@@ -337,7 +621,7 @@ public class CommandService implements Commands {
                 phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
                 break;
             default:
-                System.out.println("\u001B[31m"+"Invalid type number.");
+                System.out.println("\u001B[31m" + "Invalid type number.");
                 break;
         }
     }
@@ -345,13 +629,13 @@ public class CommandService implements Commands {
     private void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String, Contact> map) {
 
         System.out.println(map.get(name).getPhoneNumbers().get(type));
-        System.out.print("\u001B[34m"+"Input phone number which one do you want to update. -> ");
+        System.out.print("\u001B[34m" + "Input phone number which one do you want to update. -> ");
         String phoneNumber = in.next();
         while (!contact.getPhoneNumbers().get(type).contains(phoneNumber)) {
-            System.out.print("\u001B[34m"+"Input right phone number! -> ");
+            System.out.print("\u001B[34m" + "Input right phone number! -> ");
             phoneNumber = in.next();
         }
-        System.out.print("\u001B[34m"+"Input new phone number. -> ");
+        System.out.print("\u001B[34m" + "Input new phone number. -> ");
         String newPhoneNumber = in.next();
         map.get(name).getPhoneNumbers().get(type).remove(phoneNumber);
         map.get(name).getPhoneNumbers().get(type).add(newPhoneNumber);
@@ -365,7 +649,7 @@ public class CommandService implements Commands {
      */
     private void emailUpdate(String name, Map<String, Contact> map) {
 
-        System.out.println("\u001B[34m"+"Choose email type.");
+        System.out.println("\u001B[34m" + "Choose email type.");
         printEmailType();
         System.out.print(" \n-> ");
         int typeNumber = in.nextInt();
@@ -381,7 +665,7 @@ public class CommandService implements Commands {
                 emailUpdateCase(name, EmailType.OTHER, map);
                 break;
             default:
-                System.out.println("\u001B[31m"+"Invalid type number.");
+                System.out.println("\u001B[31m" + "Invalid type number.");
                 break;
         }
     }
@@ -394,14 +678,14 @@ public class CommandService implements Commands {
      */
     private void emailUpdateCase(String name, EmailType type, Map<String, Contact> map) {
         System.out.println(map.get(name).getEmails().get(type));
-        System.out.print("\u001B[34m"+"Input email which one do you want to update. -> ");
+        System.out.print("\u001B[34m" + "Input email which one do you want to update. -> ");
         String email = in.next();
 
         while (!contact.getEmails().get(type).contains(email)) {
-            System.out.print("\u001B[34m"+"Input right email! -> ");
+            System.out.print("\u001B[34m" + "Input right email! -> ");
             email = in.next();
         }
-        System.out.print("\u001B[34m"+"Input new email. -> ");
+        System.out.print("\u001B[34m" + "Input new email. -> ");
         String newEmail = in.next();
         map.get(name).getEmails().get(type).remove(email);
         map.get(name).getEmails().get(type).add(newEmail);
@@ -411,12 +695,17 @@ public class CommandService implements Commands {
      * Print update type list
      */
     private void printUpdateType() {
-        System.out.println("\u001B[34m"+"\nChoose update TYPE: \n");
+        System.out.println("\u001B[34m" + "\nChoose update TYPE: \n");
 
-        System.out.println("\u001B[32m"+"INPUT " + UpdateCommandsEnum.NAME_UPDATE.ordinal() + " FOR update Name");
+        System.out.println("\u001B[32m" + "INPUT " + UpdateCommandsEnum.NAME_UPDATE.ordinal() + " FOR update Name");
         System.out.println("INPUT " + UpdateCommandsEnum.PHONE_NUMBER_UPDATE.ordinal() + " FOR update PhoneNumber");
+        System.out.println("INPUT " + UpdateCommandsEnum.PHONE_NUMBER_UPDATE.ordinal() + " FOR delete PhoneNumber");
         System.out.println("INPUT " + UpdateCommandsEnum.EMAIL_UPDATE.ordinal() + " FOR update Email");
-        System.out.println("INPUT " + UpdateCommandsEnum.COMPANY_NAME_UPDATE.ordinal() + " FOR update company name"+"\u001B[0m");
+        System.out.println("INPUT " + UpdateCommandsEnum.EMAIL_UPDATE.ordinal() + " FOR delete Email");
+        System.out.println("INPUT " + UpdateCommandsEnum.COMPANY_NAME_UPDATE.ordinal() +
+                " FOR update company name" + "\u001B[0m");
+        System.out.println("INPUT " + UpdateCommandsEnum.COMPANY_NAME_UPDATE.ordinal() +
+                " FOR delete company name" + "\u001B[0m");
     }
 
     /**
@@ -429,7 +718,7 @@ public class CommandService implements Commands {
 
         while (true) {
 
-            System.out.print("\u001B[34m"+"Input contact's name which you want to delete -> ");
+            System.out.print("\u001B[34m" + "Input contact's name which you want to delete -> ");
             String name = in.next();
 
             while (map.get(name) == null) {
@@ -439,17 +728,17 @@ public class CommandService implements Commands {
                 name = in.next();
             }
 
-            System.out.println("\u001B[34m"+"Are you sure (Y/N) -> ");
+            System.out.println("\u001B[34m" + "Are you sure (Y/N) -> ");
             String yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
 
                 map.remove(name);
-                System.out.print("\u001B[36m"+"The contact is deleted.");
+                System.out.print("\u001B[36m" + "The contact is deleted.");
                 break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
-                System.out.println("\u001B[31m"+"Wrong choose, input Y/N");
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
 
                 break;
@@ -459,15 +748,15 @@ public class CommandService implements Commands {
 
     public static void printCommands() {
 
-        System.out.println("\u001B[32m"+ "INPUT " + CommandsEnum.CREATE_CONTACT.ordinal() + " FOR CREATE A NEW CONTACT");
+        System.out.println("\u001B[32m" + "INPUT " + CommandsEnum.CREATE_CONTACT.ordinal() + " FOR CREATE A NEW CONTACT");
         System.out.println("INPUT " + CommandsEnum.READ_CONTACT.ordinal() + " FOR VIEW ALL CONTACTS");
         System.out.println("INPUT " + CommandsEnum.UPDATE_CONTACT.ordinal() + " FOR UPDATE CONTACTS");
         System.out.println("INPUT " + CommandsEnum.DELETE_CONTACT.ordinal() + " FOR DELETE CONTACTS");
-        System.out.println("INPUT " + CommandsEnum.EXIT.ordinal() + " FOR LOGOUT"+ "\u001B[0m");
+        System.out.println("INPUT " + CommandsEnum.EXIT.ordinal() + " FOR LOGOUT" + "\u001B[0m");
     }
 
     @Override
     public String toString() {
-        return "\u001B[35m"+"CommandService{" + "name='" + name + '\'' + ", contact=" + contact + '}';
+        return "\u001B[35m" + "CommandService{" + "name='" + name + '\'' + ", contact=" + contact + '}';
     }
 }

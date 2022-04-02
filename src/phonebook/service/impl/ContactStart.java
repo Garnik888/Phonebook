@@ -19,48 +19,135 @@ public class ContactStart {
         CommandService commandService = new CommandService();
 
         CommandService.printCommands();
-        System.out.print("\u001B[34m"+"\n*****Insert number of operation : -> ");
-        int commandNum = in.nextInt();
 
         while (true) {
+
+            System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
+            int commandNum = in.nextInt();
 
             switch (commandNum) {
 
                 case 0:
 
-                    System.exit(0);
+                    System.out.println("\u001B[34m" + "Are you suer to exit Y/N -> ");
+
+                    while (true) {
+
+                        String yesNo = in.next();
+
+                        if (yesNo.equalsIgnoreCase("y")) {
+                            System.exit(0);
+                        } else if (!yesNo.equalsIgnoreCase("n")) {
+                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                        } else {
+
+                            break;
+                        }
+                    }
+
+                    break;
                 case 1:
 
-                    commandService.create(phoneBook);
+                    System.out.print("\u001B[34m" + "Are you suer to crate contact -> ");
+
+                    while (true) {
+
+                        String yesNo = in.next();
+
+                        if (yesNo.equalsIgnoreCase("y")) {
+                            commandService.create(phoneBook);
+                            break;
+                        } else if (!yesNo.equalsIgnoreCase("n")) {
+                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                        } else {
+
+                            break;
+                        }
+                    }
+
                     break;
                 case 2:
 
-                    commandService.getContact(phoneBook);
+                    System.out.print("\u001B[34m" + "Are you suer to get contact -> ");
+
+                    while (true) {
+
+                        String yesNo = in.next();
+
+                        if (yesNo.equalsIgnoreCase("y")) {
+                            commandService.getContact(phoneBook);
+                            break;
+                        } else if (!yesNo.equalsIgnoreCase("n")) {
+                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                        } else {
+
+                            break;
+                        }
+                    }
                     break;
                 case 3:
-                    commandService.update(phoneBook);
+                    System.out.print("\u001B[34m" + "Are you suer to update contact -> ");
+
+                    while (true) {
+
+                        String yesNo = in.next();
+
+                        if (yesNo.equalsIgnoreCase("y")) {
+                            commandService.update(phoneBook);
+                            break;
+                        } else if (!yesNo.equalsIgnoreCase("n")) {
+                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                        } else {
+
+                            break;
+                        }
+                    }
                     break;
                 case 4:
-                    commandService.delete(phoneBook);
+                    System.out.print("\u001B[34m" + "Are you suer to delet contact -> ");
+
+                    while (true) {
+
+                        String yesNo = in.next();
+
+                        if (yesNo.equalsIgnoreCase("y")) {
+                            commandService.delete(phoneBook);
+                            break;
+                        } else if (!yesNo.equalsIgnoreCase("n")) {
+                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                        } else {
+
+                            break;
+                        }
+                    }
                     break;
                 default:
-                    System.out.println("\u001B[31m"+"\n****Invalid command number****\n");
+                    System.out.println("\u001B[31m" + "\n****Invalid command number****\n");
             }
 
-            System.out.print("\u001B[34m"+"Insert YES/NO if you want view commands list : -> ");
+            System.out.print("\u001B[34m" + "Insert Y/N if you want view commands list : -> ");
             String yes = in.next();
 
-            if (yes.equalsIgnoreCase("y")) {
+            while (true) {
+                if (yes.equalsIgnoreCase("y")) {
 
-                CommandService.printCommands();
+                    CommandService.printCommands();
+
+                    System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
+                    commandNum = in.nextInt();
+                    break;
+                } else if (!yes.equalsIgnoreCase("n")) {
+
+                    System.out.print("\u001B[34m" + "Wrong choose, input Y/N -> ");
+                } else {
+
+                    System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
+                    commandNum = in.nextInt();
+                    break;
+                }
             }
 
-            System.out.print("\u001B[34m"+"\n*****Insert number of operation : -> ");
-            commandNum = in.nextInt();
-
-
-
+            in.close();
         }
     }
-
 }
