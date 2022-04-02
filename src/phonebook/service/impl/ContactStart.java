@@ -29,7 +29,7 @@ public class ContactStart {
 
                 case 0:
 
-                    System.out.println("\u001B[34m" + "Are you suer to exit Y/N -> ");
+                    System.out.println("\u001B[34m" + "Are you suer to exit Y/N ->  ");
 
                     while (true) {
 
