@@ -23,131 +23,135 @@ public class ContactStart {
         while (true) {
 
             System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
-            int commandNum = in.nextInt();
+            int commandNum;
+            try {
+                commandNum = in.nextInt();
 
-            switch (commandNum) {
 
-                case 0:
+                switch (commandNum) {
 
-                    System.out.println("\u001B[34m" + "Are you suer to exit Y/N ->  ");
+                    case 0:
 
-                    while (true) {
+                        System.out.println("\u001B[34m" + "Are you sure to exit Y/N ->  ");
 
-                        String yesNo = in.next();
+                        while (true) {
 
-                        if (yesNo.equalsIgnoreCase("y")) {
-                            System.exit(0);
-                        } else if (!yesNo.equalsIgnoreCase("n")) {
-                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-                        } else {
+                            String yesNo = in.next();
 
-                            break;
+                            if (yesNo.equalsIgnoreCase("y")) {
+                                System.exit(0);
+                            } else if (!yesNo.equalsIgnoreCase("n")) {
+                                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                            } else {
+
+                                break;
+                            }
                         }
-                    }
 
-                    break;
-                case 1:
+                        break;
+                    case 1:
 
-                    System.out.print("\u001B[34m" + "Are you suer to crate contact -> ");
+                        System.out.print("\u001B[34m" + "Are you sure to crate contact -> ");
 
-                    while (true) {
+                        while (true) {
 
-                        String yesNo = in.next();
+                            String yesNo = in.next();
 
-                        if (yesNo.equalsIgnoreCase("y")) {
-                            commandService.create(phoneBook);
-                            break;
-                        } else if (!yesNo.equalsIgnoreCase("n")) {
-                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-                        } else {
+                            if (yesNo.equalsIgnoreCase("y")) {
+                                commandService.create(phoneBook);
+                                break;
+                            } else if (!yesNo.equalsIgnoreCase("n")) {
+                                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                            } else {
 
-                            break;
+                                break;
+                            }
                         }
-                    }
 
-                    break;
-                case 2:
+                        break;
+                    case 2:
 
-                    System.out.print("\u001B[34m" + "Are you suer to get contact -> ");
+                        System.out.print("\u001B[34m" + "Are you sure to get contact -> ");
 
-                    while (true) {
+                        while (true) {
 
-                        String yesNo = in.next();
+                            String yesNo = in.next();
 
-                        if (yesNo.equalsIgnoreCase("y")) {
-                            commandService.getContact(phoneBook);
-                            break;
-                        } else if (!yesNo.equalsIgnoreCase("n")) {
-                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-                        } else {
+                            if (yesNo.equalsIgnoreCase("y")) {
+                                commandService.getContact(phoneBook);
+                                break;
+                            } else if (!yesNo.equalsIgnoreCase("n")) {
+                                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                            } else {
 
-                            break;
+                                break;
+                            }
                         }
-                    }
-                    break;
-                case 3:
-                    System.out.print("\u001B[34m" + "Are you suer to update contact -> ");
+                        break;
+                    case 3:
+                        System.out.print("\u001B[34m" + "Are you sure to update contact -> ");
 
-                    while (true) {
+                        while (true) {
 
-                        String yesNo = in.next();
+                            String yesNo = in.next();
 
-                        if (yesNo.equalsIgnoreCase("y")) {
-                            commandService.update(phoneBook);
-                            break;
-                        } else if (!yesNo.equalsIgnoreCase("n")) {
-                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-                        } else {
+                            if (yesNo.equalsIgnoreCase("y")) {
+                                commandService.update(phoneBook);
+                                break;
+                            } else if (!yesNo.equalsIgnoreCase("n")) {
+                                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                            } else {
 
-                            break;
+                                break;
+                            }
                         }
-                    }
-                    break;
-                case 4:
-                    System.out.print("\u001B[34m" + "Are you suer to delet contact -> ");
+                        break;
+                    case 4:
+                        System.out.print("\u001B[34m" + "Are you sure to delete contact -> ");
 
-                    while (true) {
+                        while (true) {
 
-                        String yesNo = in.next();
+                            String yesNo = in.next();
 
-                        if (yesNo.equalsIgnoreCase("y")) {
-                            commandService.delete(phoneBook);
-                            break;
-                        } else if (!yesNo.equalsIgnoreCase("n")) {
-                            System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-                        } else {
+                            if (yesNo.equalsIgnoreCase("y")) {
+                                commandService.delete(phoneBook);
+                                break;
+                            } else if (!yesNo.equalsIgnoreCase("n")) {
+                                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+                            } else {
 
-                            break;
+                                break;
+                            }
                         }
-                    }
-                    break;
-                default:
-                    System.out.println("\u001B[31m" + "\n****Invalid command number****\n");
+                        break;
+                    default:
+                        System.out.println("\u001B[31m" + "\n****Invalid command number****\n");
+                }
+
+            } catch (InputMismatchException ime) {
+
+                System.out.println("input number from 0 to 4");
             }
 
-            System.out.print("\u001B[34m" + "Insert Y/N if you want view commands list : -> ");
-            String yes = in.next();
+
+            System.out.print("\u001B[34m" + "\nInsert Y/N if you want view commands list : -> ");
 
             while (true) {
+
+                String yes = in.next();
+
                 if (yes.equalsIgnoreCase("y")) {
 
                     CommandService.printCommands();
 
-                    System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
-                    commandNum = in.nextInt();
-                    break;
                 } else if (!yes.equalsIgnoreCase("n")) {
 
                     System.out.print("\u001B[34m" + "Wrong choose, input Y/N -> ");
                 } else {
 
-                    System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
-                    commandNum = in.nextInt();
                     break;
                 }
             }
-
-            in.close();
         }
     }
 }
