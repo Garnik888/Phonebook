@@ -19,7 +19,7 @@ public class ContactStart {
         CommandService commandService = new CommandService();
 
         CommandService.printCommands();
-        System.out.print("\n*****Insert number of operation : -> ");
+        System.out.print("\u001B[34m"+"\n*****Insert number of operation : -> ");
         int commandNum = in.nextInt();
 
         while (true) {
@@ -44,18 +44,18 @@ public class ContactStart {
                     commandService.delete(phoneBook);
                     break;
                 default:
-                    System.out.println("\n****Invalid command number****\n");
+                    System.out.println("\u001B[31m"+"\n****Invalid command number****\n");
             }
 
-            System.out.print("Insert YES/NO if you want view commands list : -> ");
+            System.out.print("\u001B[34m"+"Insert YES/NO if you want view commands list : -> ");
             String yes = in.next();
 
-            if (yes.equalsIgnoreCase("yes")) {
+            if (yes.equalsIgnoreCase("y")) {
 
                 CommandService.printCommands();
             }
 
-            System.out.print("\n*****Insert number of operation : -> ");
+            System.out.print("\u001B[34m"+"\n*****Insert number of operation : -> ");
             commandNum = in.nextInt();
 
 
