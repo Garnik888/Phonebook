@@ -9,7 +9,7 @@ public class ContactStart {
 
     //Class field
     private String name;
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
 
     public void start() {

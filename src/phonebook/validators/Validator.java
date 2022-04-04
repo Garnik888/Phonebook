@@ -23,4 +23,26 @@ public class Validator {
             return true;
         }
     }
+
+    public static boolean checkNameSize(String name) {
+        return name.length() < 20;
+    }
+
+    public static boolean checkEmailOtherContains(String email) {
+        if (email == null) {
+            return false;
+        } else return email.contains("@");
+    }
+
+    public static boolean checkEmailGmail(String email) {
+        if (email == null) {
+            return false;
+        } else return email.toLowerCase().endsWith("@gmail.com");
+    }
+
+    public static boolean checkEmailIcloud(String email) {
+        if (email == null) {
+            return false;
+        } else return email.toLowerCase().endsWith("@icloud.com");
+    }
 }

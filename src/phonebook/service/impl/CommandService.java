@@ -11,10 +11,10 @@ import javax.swing.*;
 import java.util.*;
 
 public class CommandService implements Commands {
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
     private String name;
-    private Contact contact = new Contact();
+    private final Contact contact = new Contact();
 
     @Override
     public void create(Map<String, Contact> map) {
