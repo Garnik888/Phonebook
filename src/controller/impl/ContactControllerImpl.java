@@ -13,15 +13,15 @@ public class ContactControllerImpl {
     PhoneNumberControllerImpl phoneNumberController = new PhoneNumberControllerImpl();
     EmailControllerImpl emailController = new EmailControllerImpl();
     String name;
-
-    private final Contact contact = new Contact();
+    Contact contact = new Contact();
 
     public void add(Map<String, Contact> map) {
+        final Contact contact = new Contact();
 
         System.out.print("\u001B[34m" + "Input contact's name -> ");
         String name = in.next();
 
-        phoneNumberController.createPhoneNumberSet();
+        phoneNumberController.createPhoneNumbers();
         String yesNo;
 
         while (true) {
@@ -31,9 +31,9 @@ public class ContactControllerImpl {
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                phoneNumberController.createPhoneNumberSet();
+                contact.setPhoneNumbers(phoneNumberController.createPhoneNumbers());
                 break;
-            } else if (yesNo.equalsIgnoreCase("n")) {
+            } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
@@ -43,6 +43,24 @@ public class ContactControllerImpl {
         }
 
         emailController.createEmailSet();
+
+        while (true) {
+
+            System.out.print("\u001B[34m" + "Do you want create another email? (Y/N) -> ");
+            yesNo = in.next();
+
+            if (yesNo.equalsIgnoreCase("y")) {
+
+                contact.setEmails(emailController.createEmailSet());
+                break;
+            } else if (!yesNo.equalsIgnoreCase("n")) {
+
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+            } else {
+
+                break;
+            }
+        }
 
         System.out.print("\u001B[34m" + "Do you want create company name? (Y/N) -> ");
 
@@ -70,15 +88,13 @@ public class ContactControllerImpl {
        map.put(name, contact);
     }
 
-
-
-
     public void search(Map<String, Contact> map) {
         Map<String, Contact> map1 = new TreeMap<>(map);
 
         for (Map.Entry<String, Contact> contactName : map1.entrySet()) {
             System.out.println(contactName.getKey());
         }
+
         System.out.print("\u001B[34m" + "Input name -> ");
         String name = in.next();
 
@@ -88,8 +104,10 @@ public class ContactControllerImpl {
         }
 
         System.out.println("\u001B[33m" + "------ CONTACTS------\n" + "\n---" + name + "---\n"
-                + "Phone number(s) ->" + contact.getPhoneNumbers() + "\nCompany ->"
-                + contact.getCompany() + "\nEmail(s) ->" + contact.getEmails());
+                + "Phone number(s) ->" + map.get(name).getPhoneNumbers() + "\nCompany ->"
+                + map.get(name).getCompany() + "\nEmail(s) ->" + map.get(name).getEmails());
+
+
     }
 
 

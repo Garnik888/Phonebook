@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Menu {
 
 
-    private String name;
     private final Scanner in = new Scanner(System.in);
 
     Map<String, Contact> phoneBook = new HashMap<>();
@@ -17,32 +16,30 @@ public class Menu {
 
     public void start() {
 
-
         ApplicationController.printCommands();
+
+         String commandNum;
 
         while (true) {
 
             System.out.print("\u001B[34m" + "\n*****Insert number of operation : -> ");
-            int commandNum;
-
-            commandNum = in.nextInt();
-
+            commandNum = in.next();
 
             switch (commandNum) {
 
-                case 0:
+                case "0":
                     exit();
                     break;
-                case 1:
+                case "1":
                     create();
                     break;
-                case 2:
+                case "2":
                     get();
                     break;
-                case 3:
+                case "3":
                     update();
                     break;
-                case 4:
+                case "4":
                     delete();
                     break;
                 default:
@@ -52,15 +49,17 @@ public class Menu {
 
             System.out.print("\u001B[34m" + "\nInsert Y/N if you want view commands list : -> ");
 
+            String yesNo;
+
             while (true) {
 
-                String yes = in.next();
+                yesNo = in.next();
 
-                if (yes.equalsIgnoreCase("y")) {
+                if (yesNo.equalsIgnoreCase("y")) {
 
                     ApplicationController.printCommands();
-
-                } else if (!yes.equalsIgnoreCase("n")) {
+                    break;
+                } else if (!yesNo.equalsIgnoreCase("n")) {
 
                     System.out.print("\u001B[34m" + "Wrong choose, input Y/N -> ");
                 } else {

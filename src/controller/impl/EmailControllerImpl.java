@@ -3,6 +3,7 @@ package controller.impl;
 import controller.ApplicationController;
 import model.Contact;
 import model.enums.EmailType;
+import model.enums.PhoneNumberType;
 
 import java.util.*;
 
@@ -12,79 +13,22 @@ public class EmailControllerImpl {
     Contact contact = new Contact();
 
     /**
-     * Map email editor
-     */
-    public void createEmailSet() {
-
-        System.out.print("\u001B[34m" + "Do you want to add email?(Y/N) -> ");
-        Set<String> emailSet = new HashSet<>();
-
-        String yesNo;
-
-        while (true) {
-            yesNo = in.next();
-
-            if (yesNo.equalsIgnoreCase("y")) {
-
-                System.out.print("\u001B[34m" + "Input email -> ");
-                String email = in.next();
-
-                emailSet.add(email);
-
-                ApplicationController.printEmailType();
-                System.out.print("->");
-
-                boolean isTypeChoose = true;
-                String typeNumber;
-
-                while (isTypeChoose) {
-
-                    isTypeChoose = false;
-                    typeNumber = in.next();
-                    switch (typeNumber) {
-                        case "0":
-                            emailMapBuilder(EmailType.GMAIL, emailSet, email);
-                            break;
-                        case "1":
-                            emailMapBuilder(EmailType.ICLOUD, emailSet, email);
-                            break;
-                        case "2":
-                            emailMapBuilder(EmailType.OTHER, emailSet, email);
-                            break;
-                        default:
-                            System.out.println("\u001B[31m" + "Invalid type number.");
-                            System.out.print("\u001B[34m" + "Input new number -> ");
-                            isTypeChoose = true;
-                    }
-                }
-
-                break;
-
-            } else if (!yesNo.equalsIgnoreCase("n")) {
-
-                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-            } else {
-
-                emailMapBuilder(EmailType.OTHER, emailSet, "--------");
-                break;
-            }
-        }
-    }
-
-    /**
      * Build email
      *
-     * @param type     EmailType Enum type
-     * @param emailSet Set<String> type
-     * @param email    String type
+     * @param emails Map<EmailType, Set<String>>
+     * @param type   EmailType
+     * @param email  email
      */
-    public void emailMapBuilder(EmailType type, Set<String> emailSet,
-                                String email) {
-        if (!contact.getEmails().containsKey(type)) {
-            contact.getEmails().put(type, emailSet);
+    public void emailMapBuilder(Map<EmailType, Set<String>> emails,
+                                EmailType type, String email) {
+        if (emails.containsKey(type)) {
+            emails.get(type).add(email);
+
         } else {
 
-            contact.getEmails().get(type).add(email);
+            Set<String> emilValues = new HashSet<>();
+            emilValues.add(email);
+            emails.put(type, emilValues);
         }
 
     }
@@ -175,4 +119,67 @@ public class EmailControllerImpl {
         }
     }
 
+    /**
+     * Map email editor
+     */
+    public Map<EmailType, Set<String>> createEmailSet() {
+
+        Map<EmailType, Set<String>> emailMaps = new HashMap<>();
+        System.out.print("\u001B[34m" + "Do you want to add email?(Y/N) -> ");
+        Set<String> emailSet = new HashSet<>();
+
+        String yesNo;
+
+        while (true) {
+            yesNo = in.next();
+
+            if (yesNo.equalsIgnoreCase("y")) {
+
+                System.out.print("\u001B[34m" + "Input email -> ");
+                String email = in.next();
+
+                emailSet.add(email);
+
+                ApplicationController.printEmailType();
+                System.out.print("->");
+
+                boolean isTypeChoose = true;
+                String typeNumber;
+
+                while (isTypeChoose) {
+
+                    isTypeChoose = false;
+                    typeNumber = in.next();
+                    switch (typeNumber) {
+                        case "0":
+                            emailMapBuilder(emailMaps, EmailType.GMAIL, email);
+                            break;
+                        case "1":
+                            emailMapBuilder(emailMaps, EmailType.ICLOUD, email);
+                            break;
+                        case "2":
+                            emailMapBuilder(emailMaps, EmailType.OTHER, email);
+                            break;
+                        default:
+                            System.out.println("\u001B[31m" + "Invalid type number.");
+                            System.out.print("\u001B[34m" + "Input new number -> ");
+                            isTypeChoose = true;
+                    }
+                }
+
+                break;
+            } else if (!yesNo.equalsIgnoreCase("n")) {
+
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
+            } else {
+
+                emailMapBuilder(emailMaps, EmailType.OTHER,
+                        "--------");
+
+                break;
+            }
+        }
+
+        return emailMaps;
+    }
 }

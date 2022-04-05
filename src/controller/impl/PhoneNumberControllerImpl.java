@@ -14,17 +14,25 @@ public class PhoneNumberControllerImpl {
     /**
      * Build phone number
      *
-     * @param type           PhoneNumberType Enum type
-     * @param phoneNumberSet Set<String> type
-     * @param phoneNumber    String type
+     * @param type        PhoneNumberType Enum type
+     * @param phoneNumber String type
      */
-    public void phoneNumberMapBuilder(PhoneNumberType type, Set<String> phoneNumberSet, String phoneNumber) {
-
+    public void phoneNumberMapBuilder(Map<PhoneNumberType, Set<String>> phoneNumbers,
+                                      PhoneNumberType type, String phoneNumber) {
+/*
         if (!contact.getPhoneNumbers().containsKey(type)) {
             contact.getPhoneNumbers().put(type, phoneNumberSet);
         } else {
 
             contact.getPhoneNumbers().get(type).add(phoneNumber);
+        }
+        */
+        if (phoneNumbers.containsKey(type)) {
+            phoneNumbers.get(type).add(phoneNumber);
+        } else {
+            Set<String> phoneNumbersValues = new HashSet<>();
+            phoneNumbersValues.add(phoneNumber);
+            phoneNumbers.put(type, phoneNumbersValues);
         }
     }
 
@@ -122,13 +130,15 @@ public class PhoneNumberControllerImpl {
     /**
      * Map phone number editor
      */
-    public void createPhoneNumberSet() {
+    public Map<PhoneNumberType, Set<String>> createPhoneNumbers() {
 
-        Set<String> phoneNumberSet = new HashSet<>();
+        Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
 
-        phoneNumberSet.add(phoneNumber);
+        Set<String> phoneNums = new HashSet<>();
+        phoneNums.add(phoneNumber);
+        phoneNumbers.put(PhoneNumberType.MOBILE, phoneNums);
 
         System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");
 
@@ -153,19 +163,19 @@ public class PhoneNumberControllerImpl {
                     switch (typeNumber) {
 
                         case "0":
-                            phoneNumberMapBuilder(PhoneNumberType.MOBILE, phoneNumberSet, phoneNumber);
+                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.MOBILE, phoneNumber);
                             break;
                         case "1":
-                            phoneNumberMapBuilder(PhoneNumberType.HOME, phoneNumberSet, phoneNumber);
+                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.HOME, phoneNumber);
                             break;
                         case "2":
-                            phoneNumberMapBuilder(PhoneNumberType.WORK, phoneNumberSet, phoneNumber);
+                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.WORK, phoneNumber);
                             break;
                         case "3":
-                            phoneNumberMapBuilder(PhoneNumberType.SCHOOL, phoneNumberSet, phoneNumber);
+                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.SCHOOL, phoneNumber);
                             break;
                         case "4":
-                            phoneNumberMapBuilder(PhoneNumberType.OTHER, phoneNumberSet, phoneNumber);
+                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.OTHER, phoneNumber);
                             break;
                         default:
                             System.out.println("\u001B[31m" + "Invalid type number.");
@@ -182,11 +192,11 @@ public class PhoneNumberControllerImpl {
                 System.out.print("\u001B[34m" + "Input Y/N-> ");
             } else {
 
-                phoneNumberMapBuilder(PhoneNumberType.OTHER, phoneNumberSet, phoneNumber);
+                phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.OTHER, phoneNumber);
                 break;
             }
-
         }
-    }
 
+        return phoneNumbers;
+    }
 }
