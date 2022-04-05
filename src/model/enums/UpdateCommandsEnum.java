@@ -1,4 +1,4 @@
-package phonebook.service;
+package model.enums;
 
 public enum UpdateCommandsEnum {
 

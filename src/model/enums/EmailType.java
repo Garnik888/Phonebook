@@ -1,4 +1,4 @@
-package phonebook.model;
+package model.enums;
 
 public enum EmailType {
 

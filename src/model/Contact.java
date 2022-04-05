@@ -1,4 +1,7 @@
-package phonebook.model;
+package model;
+
+import model.enums.EmailType;
+import model.enums.PhoneNumberType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +12,7 @@ public class Contact {
 
     //Class fields
     private Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
-    private String company = "";
+    private String company;
     private Map<EmailType, Set<String>> emails = new HashMap<>();
 
     /**
