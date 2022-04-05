@@ -58,6 +58,8 @@ public class EmailControllerImpl {
                     }
                 }
 
+                break;
+
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
@@ -96,12 +98,18 @@ public class EmailControllerImpl {
     public void emailUpdate(String name, Map<String, Contact> map) {
         ApplicationController.printEmailType();
 
-        while (true) {
-            System.out.println("\u001B[34m" + "Choose email type -> ");
-            String typeNumber;
+        String typeNumber;
 
+        boolean isTypeChoose = true;
+
+        while (isTypeChoose) {
+
+            isTypeChoose = false;
+
+            System.out.println("\u001B[34m" + "Choose email type -> ");
 
             typeNumber = in.next();
+
             switch (typeNumber) {
                 case "0":
                     emailUpdateCase(name, EmailType.GMAIL, map);
@@ -114,6 +122,7 @@ public class EmailControllerImpl {
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
+                    isTypeChoose = true;
             }
         }
     }
@@ -146,10 +155,13 @@ public class EmailControllerImpl {
      * @param map  Map<String, Contact> type
      */
     public void deleteForEmail(EmailType type, Map<String, Contact> map) {
+
+        String email;
+
         while (true) {
 
             System.out.print("Input email -> ");
-            String email = in.next();
+            email = in.next();
             if (!contact.getEmails().get(type).contains(email)) {
 
                 contact.getEmails().get(type).remove(email);

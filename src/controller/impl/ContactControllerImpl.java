@@ -22,15 +22,17 @@ public class ContactControllerImpl {
         String name = in.next();
 
         phoneNumberController.createPhoneNumberSet();
+        String yesNo;
 
         while (true) {
 
             System.out.print("\u001B[34m" + "Do you want create another phone number? (Y/N) -> ");
-            String yesNo = in.next();
+            yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
 
                 phoneNumberController.createPhoneNumberSet();
+                break;
             } else if (yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
@@ -45,16 +47,17 @@ public class ContactControllerImpl {
         System.out.print("\u001B[34m" + "Do you want create company name? (Y/N) -> ");
 
         while (true) {
-            String yesNo = in.next();
+
+            yesNo = in.next();
             in.nextLine();
 
             if (yesNo.equalsIgnoreCase("y")) {
 
                 System.out.print("\u001B[34m" + "Input company name  -> ");
                 String company = in.nextLine();
-
                 contact.setCompany(company);
                 break;
+
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");

@@ -135,9 +135,7 @@ public class PhoneNumberControllerImpl {
         String yesNo;
 
         while (true) {
-
             yesNo = in.next();
-
             if (yesNo.equalsIgnoreCase("y")) {
 
                 ApplicationController.printPhoneNumbersType();
@@ -153,6 +151,7 @@ public class PhoneNumberControllerImpl {
                     typeNumber = in.next();
 
                     switch (typeNumber) {
+
                         case "0":
                             phoneNumberMapBuilder(PhoneNumberType.MOBILE, phoneNumberSet, phoneNumber);
                             break;
@@ -175,9 +174,12 @@ public class PhoneNumberControllerImpl {
                     }
                 }
 
+                break;
+
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
+                System.out.print("\u001B[34m" + "Input Y/N-> ");
             } else {
 
                 phoneNumberMapBuilder(PhoneNumberType.OTHER, phoneNumberSet, phoneNumber);
