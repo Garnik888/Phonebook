@@ -117,7 +117,7 @@ public class PhoneNumberControllerImpl {
         Set<String> otherSet = new HashSet<>();
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
-
+        boolean isTypeChoose;
 
         System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");
 
@@ -129,8 +129,7 @@ public class PhoneNumberControllerImpl {
 
                 ApplicationController.printPhoneNumbersType();
                 System.out.print(" \n-> ");
-
-                boolean isTypeChoose = true;
+                isTypeChoose = true;
                 String typeNumber;
 
                 while (isTypeChoose) {
@@ -144,7 +143,7 @@ public class PhoneNumberControllerImpl {
                         case "0":
 
                             if (phoneNumbers.containsKey(PhoneNumberType.MOBILE)){
-                                mobileSet.add(phoneNumber);
+                                phoneNumbers.get(PhoneNumberType.MOBILE).add(phoneNumber);
                             }else {
                                 mobileSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.MOBILE, mobileSet);
@@ -152,7 +151,7 @@ public class PhoneNumberControllerImpl {
                             break;
                         case "1":
                             if (phoneNumbers.containsKey(PhoneNumberType.HOME)){
-                                homeSet.add(phoneNumber);
+                                phoneNumbers.get(PhoneNumberType.HOME).add(phoneNumber);
                             }else {
                                 homeSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.HOME, homeSet);
@@ -160,7 +159,7 @@ public class PhoneNumberControllerImpl {
                             break;
                         case "2":
                             if (phoneNumbers.containsKey(PhoneNumberType.WORK)){
-                                workSet.add(phoneNumber);
+                                phoneNumbers.get(PhoneNumberType.WORK).add(phoneNumber);
                             }else {
                                 workSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.WORK, workSet);
@@ -168,7 +167,7 @@ public class PhoneNumberControllerImpl {
                             break;
                         case "3":
                             if (phoneNumbers.containsKey(PhoneNumberType.SCHOOL)){
-                                schoolSet.add(phoneNumber);
+                                phoneNumbers.get(PhoneNumberType.SCHOOL).add(phoneNumber);
                             }else {
                                 schoolSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.SCHOOL, schoolSet);
@@ -176,7 +175,7 @@ public class PhoneNumberControllerImpl {
                             break;
                         case "4":
                             if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
-                                otherSet.add(phoneNumber);
+                                phoneNumbers.get(PhoneNumberType.OTHER).add(phoneNumber);
                             }else {
                                 otherSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
@@ -186,23 +185,22 @@ public class PhoneNumberControllerImpl {
                             System.out.println("\u001B[31m" + "Invalid type number.");
                             System.out.print("\u001B[34m" + "Input new number -> ");
                             isTypeChoose = true;
+                            break;
                     }
                 }
-
                 break;
 
-            } else if (!yesNo.equalsIgnoreCase("n")) {
-
-                System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
-                System.out.print("\u001B[34m" + "Input Y/N-> ");
-            } else {
+            } else if (yesNo.equalsIgnoreCase("n")) {
                 if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
-                    otherSet.add(phoneNumber);
+                    phoneNumbers.get(PhoneNumberType.OTHER).add(phoneNumber);
                 }else {
                     otherSet.add(phoneNumber);
                     phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
                 }
-                break;
+                isTypeChoose = true;
+            } else {
+                System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
+                System.out.print("\u001B[34m" + "Input Y/N-> ");
             }
         }
 

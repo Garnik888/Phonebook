@@ -35,12 +35,12 @@ public class ContactControllerImpl implements Serializable {
             if (yesNo.equalsIgnoreCase("y")) {
 
                 this.phoneNumbers.createPhoneNumbers(phoneNumbers);
-                break;
+
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-            } else {
 
+            } else {
                 break;
             }
         }
@@ -55,12 +55,11 @@ public class ContactControllerImpl implements Serializable {
             if (yesNo.equalsIgnoreCase("y")) {
 
                 emailController.createEmailSet(emails);
-                break;
+
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
-
                 break;
             }
         }
@@ -113,7 +112,7 @@ public class ContactControllerImpl implements Serializable {
     }
 
 
-    public void modify(Map<String, Contact> map, Map<EmailType, Set<String>> emails,  Map<PhoneNumberType, Set<String>> phoneNumbers) {
+    public void modify(Map<String, Contact> map, Map<EmailType, Set<String>> emails, Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
 
@@ -150,7 +149,7 @@ public class ContactControllerImpl implements Serializable {
                     System.out.println("\u001B[36m" + "The contact's name is updated.");
                     break;
                 case 1:
-                    this.phoneNumbers.phoneNumberUpdate(name, map,phoneNumbers);
+                    this.phoneNumbers.phoneNumberUpdate(name, map, phoneNumbers);
                     System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                     break;
                 case 2:
@@ -186,12 +185,12 @@ public class ContactControllerImpl implements Serializable {
                                             break;
                                         case 2:
                                             if (!phoneNumbers.containsKey(PhoneNumberType.WORK)) {
-                                               phoneNumbers.remove(PhoneNumberType.WORK);
+                                                phoneNumbers.remove(PhoneNumberType.WORK);
                                             }
                                             break;
                                         case 3:
                                             if (!phoneNumbers.containsKey(PhoneNumberType.SCHOOL)) {
-                                               phoneNumbers.remove(PhoneNumberType.SCHOOL);
+                                                phoneNumbers.remove(PhoneNumberType.SCHOOL);
                                             }
                                             break;
                                         case 4:
@@ -226,19 +225,19 @@ public class ContactControllerImpl implements Serializable {
                                     switch (typeNumber) {
                                         case 0:
 
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.MOBILE, map,phoneNumbers);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.MOBILE, map, phoneNumbers);
                                             break;
                                         case 1:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.HOME, map,phoneNumbers);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.HOME, map, phoneNumbers);
                                             break;
                                         case 2:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.WORK, map,phoneNumbers);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.WORK, map, phoneNumbers);
                                             break;
                                         case 3:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map,phoneNumbers);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map, phoneNumbers);
                                             break;
                                         case 4:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.OTHER, map,phoneNumbers);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.OTHER, map, phoneNumbers);
                                             break;
                                         default:
                                             System.out.println("\u001B[31m" + "Invalid type number.");
@@ -256,7 +255,7 @@ public class ContactControllerImpl implements Serializable {
                         }
                     }
                 case 3:
-                    emailController.emailUpdate(name, map,emails);
+                    emailController.emailUpdate(name, map, emails);
                     System.out.println("\u001B[36m" + "The contact's email is updated.");
                     break;
                 case 4:
@@ -320,13 +319,13 @@ public class ContactControllerImpl implements Serializable {
 
                                     switch (typeNumber) {
                                         case 0:
-                                            emailController.deleteForEmail(EmailType.GMAIL, map,emails);
+                                            emailController.deleteForEmail(EmailType.GMAIL, map, emails);
                                             break;
                                         case 1:
-                                            emailController.deleteForEmail(EmailType.ICLOUD, map,emails);
+                                            emailController.deleteForEmail(EmailType.ICLOUD, map, emails);
                                             break;
                                         case 2:
-                                            emailController.deleteForEmail(EmailType.OTHER, map,emails);
+                                            emailController.deleteForEmail(EmailType.OTHER, map, emails);
                                             break;
 
                                         default:

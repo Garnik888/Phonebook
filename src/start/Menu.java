@@ -19,7 +19,7 @@ public class Menu implements Serializable {
 
     public void start() {
 
-       phoneBook= readContacts(phoneBook);
+        phoneBook = readContacts(phoneBook);
 
         ApplicationController.printCommands();
 
@@ -33,7 +33,7 @@ public class Menu implements Serializable {
             switch (commandNum) {
 
                 case "0":
-                   writeContact(phoneBook);
+                    writeContact(phoneBook);
                     exit();
                     break;
                 case "1":
@@ -41,7 +41,6 @@ public class Menu implements Serializable {
                     break;
                 case "2":
                     get();
-
                     break;
                 case "3":
                     update();
@@ -190,128 +189,37 @@ public class Menu implements Serializable {
 
     public static void writeContact(HashMap<String, Contact> map) {
         try {
-            File fileOne=new File("fileone");
-            FileOutputStream fos=new FileOutputStream(fileOne);
-            ObjectOutputStream oos=new ObjectOutputStream(fos);
+            File fileOne = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile");
+            FileOutputStream fos = new FileOutputStream(fileOne);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
 
             oos.writeObject(map);
             oos.flush();
             oos.close();
             fos.close();
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
     }
 
 
+    public static HashMap<String, Contact> readContacts(Map<String, Contact> mapInFile) {
+        try {
+            File toRead = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile");
+            FileInputStream fis = new FileInputStream(toRead);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            mapInFile = (HashMap<String, Contact>) ois.readObject();
 
-
-        public static HashMap<String,Contact> readContacts(Map<String, Contact> mapInFile) {
-            try {
-                File toRead=new File("fileone");
-                FileInputStream fis=new FileInputStream(toRead);
-                ObjectInputStream ois=new ObjectInputStream(fis);
-                mapInFile = (HashMap<String, Contact>) ois.readObject();
-
-                ois.close();
-                fis.close();
-                //print All data in MAP
+            ois.close();
+            fis.close();
+            //print All data in MAP
              /*   for(Map.Entry<String,Contact> m :mapInFile.entrySet()){
                     System.out.println(m.getKey()+" : "+m.getValue());
                 }*/
-            } catch(Exception e) {}
-            return (HashMap<String, Contact>) mapInFile;
+        } catch (Exception e) {
         }
-
-
-    /*
-
-    public void write(Map<String, Contact> mapRead) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("people.bin"))) {
-            oos.writeObject(phoneBook);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return (HashMap<String, Contact>) mapInFile;
     }
 
-    public void read(Map<String, Contact> mapRead) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("people.bin"))) {
-                System.out.println(Arrays.toString(new Map[]{phoneBook}));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }}
-
-
-
-
-*/
-
-
-/*
-    public static void writeContacts(Map<String, Contact> map) {
-
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\User\\IdeaProjects\\Phonebook9999\\src\\resource\\ContactFile");
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(map);
-                objectOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
-
-   public static void readContact(Map<String, Contact> map) {
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\User\\IdeaProjects\\Phonebook9999\\src\\resource\\ContactFile");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            map.( objectInputStream.readObject());
-
-            System.out.println(map);
-            objectInputStream.close();
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("FILE NOT FOUND");
-        }
-    }
-
-*/
-/*
-    public void write(Map<String, Contact> mapRead) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Contact.txt"));
-            writer.write(mapRead.toString());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<String, Contact> read(Map<String, Contact> mapRead) {
-        try {
-            BufferedReader reader = null;
-            try {
-                reader = new BufferedReader(new FileReader("Contact.txt"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            String[] str;
-            String line;
-            while (true) {
-                try {
-                    try {
-                        if ((line = reader.readLine()) != null) {
-                            str = line.split("%");
-                            Map<String, String> l = new HashMap<>();
-                            l.put(str[0], str[1]);
-                            phoneBook.g
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }
-    }*/
 }

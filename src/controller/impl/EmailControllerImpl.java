@@ -11,26 +11,6 @@ public class EmailControllerImpl {
 
     Scanner in = new Scanner(System.in);
 
-    /**
-     * Build email
-     *
-     * @param emails Map<EmailType, Set<String>>
-     * @param type   EmailType
-     * @param email  email
-     */
-    public void emailMapBuilder(Map<EmailType, Set<String>> emails,
-                                EmailType type, String email) {
-        if (emails.containsKey(type)) {
-            emails.get(type).add(email);
-
-        } else {
-
-            Set<String> emilValues = new HashSet<>();
-            emilValues.add(email);
-            emails.put(type, emilValues);
-        }
-
-    }
 
     /**
      * Update email
@@ -38,7 +18,7 @@ public class EmailControllerImpl {
      * @param name String type
      * @param map  Map<String, Contact> map) type
      */
-    public void emailUpdate(String name, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
+    public void emailUpdate(String name, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
         ApplicationController.printEmailType();
 
         String typeNumber;
@@ -55,13 +35,13 @@ public class EmailControllerImpl {
 
             switch (typeNumber) {
                 case "0":
-                    emailUpdateCase(name, EmailType.GMAIL, map,emails);
+                    emailUpdateCase(name, EmailType.GMAIL, map, emails);
                     break;
                 case "1":
-                    emailUpdateCase(name, EmailType.ICLOUD, map,emails);
+                    emailUpdateCase(name, EmailType.ICLOUD, map, emails);
                     break;
                 case "2":
-                    emailUpdateCase(name, EmailType.OTHER, map,emails);
+                    emailUpdateCase(name, EmailType.OTHER, map, emails);
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
@@ -76,7 +56,7 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
+    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
         System.out.println(map.get(name).getEmails().get(type));
         System.out.print("\u001B[34m" + "Input email which one do you want to update. -> ");
         String email = in.next();
@@ -97,7 +77,7 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForEmail(EmailType type, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
+    public void deleteForEmail(EmailType type, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
 
         String email;
 
@@ -125,7 +105,7 @@ public class EmailControllerImpl {
         Set<String> gmailSet = new HashSet<>();
         Set<String> iCloudSet = new HashSet<>();
         Set<String> otherSet = new HashSet<>();
-
+        boolean isTypeChoose;
 
         System.out.print("\u001B[34m" + "Do you want to add email?(Y/N) -> ");
 
@@ -142,7 +122,7 @@ public class EmailControllerImpl {
                 ApplicationController.printEmailType();
                 System.out.print("->");
 
-                boolean isTypeChoose = true;
+                isTypeChoose = true;
                 String typeNumber;
 
                 while (isTypeChoose) {
@@ -151,25 +131,25 @@ public class EmailControllerImpl {
                     typeNumber = in.next();
                     switch (typeNumber) {
                         case "0":
-                            if (emails.containsKey(EmailType.GMAIL)){
-                                gmailSet.add(email);
-                            }else {
+                            if (emails.containsKey(EmailType.GMAIL)) {
+                                emails.get(EmailType.GMAIL).add(email);
+                            } else {
                                 gmailSet.add(email);
                                 emails.put(EmailType.GMAIL, gmailSet);
                             }
                             break;
                         case "1":
-                            if (emails.containsKey(EmailType.ICLOUD)){
-                                iCloudSet.add(email);
-                            }else {
+                            if (emails.containsKey(EmailType.ICLOUD)) {
+                                emails.get(EmailType.ICLOUD).add(email);
+                            } else {
                                 iCloudSet.add(email);
                                 emails.put(EmailType.ICLOUD, iCloudSet);
                             }
                             break;
                         case "2":
-                            if (emails.containsKey(EmailType.OTHER)){
-                                otherSet.add(email);
-                            }else {
+                            if (emails.containsKey(EmailType.OTHER)) {
+                                emails.get(EmailType.OTHER).add(email);
+                            } else {
                                 otherSet.add(email);
                                 emails.put(EmailType.OTHER, otherSet);
                             }
@@ -186,9 +166,9 @@ public class EmailControllerImpl {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
-                if (emails.containsKey(EmailType.OTHER)){
-                    otherSet.add("---");
-                }else {
+                if (emails.containsKey(EmailType.OTHER)) {
+                    emails.get(EmailType.GMAIL).add("----");
+                } else {
                     otherSet.add("----");
                     emails.put(EmailType.OTHER, otherSet);
                 }
