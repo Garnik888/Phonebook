@@ -162,10 +162,7 @@ public class EmailControllerImpl {
                 }
 
                 break;
-            } else if (!yesNo.equalsIgnoreCase("n")) {
-
-                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
-            } else {
+            } else if (yesNo.equalsIgnoreCase("n")) {
                 if (emails.containsKey(EmailType.OTHER)) {
                     emails.get(EmailType.GMAIL).add("----");
                 } else {
@@ -173,6 +170,9 @@ public class EmailControllerImpl {
                     emails.put(EmailType.OTHER, otherSet);
                 }
                 break;
+
+            } else {
+                System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             }
         }
     }

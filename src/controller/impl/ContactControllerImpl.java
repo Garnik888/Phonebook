@@ -29,7 +29,7 @@ public class ContactControllerImpl implements Serializable {
 
         while (true) {
 
-            System.out.print("\u001B[34m" + "Do you want create another phone number? (Y/N) -> ");
+            System.out.print("\u001B[34m" + "Do you want add another phone number? (Y/N) -> ");
             yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
@@ -60,6 +60,7 @@ public class ContactControllerImpl implements Serializable {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
+
                 break;
             }
         }

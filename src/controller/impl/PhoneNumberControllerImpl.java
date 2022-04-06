@@ -196,8 +196,7 @@ public class PhoneNumberControllerImpl {
                 }else {
                     otherSet.add(phoneNumber);
                     phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
-                }
-                isTypeChoose = true;
+                } break;
             } else {
                 System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
                 System.out.print("\u001B[34m" + "Input Y/N-> ");
