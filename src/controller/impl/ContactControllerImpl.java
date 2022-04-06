@@ -5,23 +5,26 @@ import model.Contact;
 import model.enums.EmailType;
 import model.enums.PhoneNumberType;
 
+import java.io.*;
 import java.util.*;
 
-public class ContactControllerImpl {
+public class ContactControllerImpl implements Serializable {
 
-    Scanner in=new Scanner(System.in);
-    PhoneNumberControllerImpl phoneNumberController = new PhoneNumberControllerImpl();
+    Scanner in = new Scanner(System.in);
+    PhoneNumberControllerImpl phoneNumbers = new PhoneNumberControllerImpl();
     EmailControllerImpl emailController = new EmailControllerImpl();
     String name;
-    Contact contact = new Contact();
+    String company;
 
     public void add(Map<String, Contact> map) {
-        final Contact contact = new Contact();
+
 
         System.out.print("\u001B[34m" + "Input contact's name -> ");
-        String name = in.next();
+        name = in.next();
 
-        phoneNumberController.createPhoneNumbers();
+        Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
+        Map<EmailType, Set<String>> emails = new HashMap<>();
+        this.phoneNumbers.createPhoneNumbers(phoneNumbers);
         String yesNo;
 
         while (true) {
@@ -31,7 +34,7 @@ public class ContactControllerImpl {
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                contact.setPhoneNumbers(phoneNumberController.createPhoneNumbers());
+                this.phoneNumbers.createPhoneNumbers(phoneNumbers);
                 break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
@@ -42,16 +45,16 @@ public class ContactControllerImpl {
             }
         }
 
-        emailController.createEmailSet();
+        emailController.createEmailSet(emails);
 
         while (true) {
 
-            System.out.print("\u001B[34m" + "Do you want create another email? (Y/N) -> ");
+            System.out.print("\u001B[34m" + "Do you want add another email? (Y/N) -> ");
             yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                contact.setEmails(emailController.createEmailSet());
+                emailController.createEmailSet(emails);
                 break;
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
@@ -72,8 +75,7 @@ public class ContactControllerImpl {
             if (yesNo.equalsIgnoreCase("y")) {
 
                 System.out.print("\u001B[34m" + "Input company name  -> ");
-                String company = in.nextLine();
-                contact.setCompany(company);
+                company = in.nextLine();
                 break;
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
@@ -84,8 +86,8 @@ public class ContactControllerImpl {
                 break;
             }
         }
-
-       map.put(name, contact);
+        Contact contact = new Contact(phoneNumbers, company, emails);
+        map.put(name, contact);
     }
 
     public void search(Map<String, Contact> map) {
@@ -111,7 +113,7 @@ public class ContactControllerImpl {
     }
 
 
-    public void modify(Map<String, Contact> map) {
+    public void modify(Map<String, Contact> map, Map<EmailType, Set<String>> emails,  Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
 
@@ -148,7 +150,7 @@ public class ContactControllerImpl {
                     System.out.println("\u001B[36m" + "The contact's name is updated.");
                     break;
                 case 1:
-                    phoneNumberController.phoneNumberUpdate(name, map);
+                    this.phoneNumbers.phoneNumberUpdate(name, map,phoneNumbers);
                     System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                     break;
                 case 2:
@@ -173,28 +175,28 @@ public class ContactControllerImpl {
 
                                     switch (typeNumber) {
                                         case 0:
-                                            if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.MOBILE)) {
-                                                contact.getPhoneNumbers().remove(PhoneNumberType.MOBILE);
+                                            if (!phoneNumbers.containsKey(PhoneNumberType.MOBILE)) {
+                                                phoneNumbers.remove(PhoneNumberType.MOBILE);
                                             }
                                             break;
                                         case 1:
-                                            if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.HOME)) {
-                                                contact.getPhoneNumbers().remove(PhoneNumberType.HOME);
+                                            if (!phoneNumbers.containsKey(PhoneNumberType.HOME)) {
+                                                phoneNumbers.remove(PhoneNumberType.HOME);
                                             }
                                             break;
                                         case 2:
-                                            if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.WORK)) {
-                                                contact.getPhoneNumbers().remove(PhoneNumberType.WORK);
+                                            if (!phoneNumbers.containsKey(PhoneNumberType.WORK)) {
+                                               phoneNumbers.remove(PhoneNumberType.WORK);
                                             }
                                             break;
                                         case 3:
-                                            if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.SCHOOL)) {
-                                                contact.getPhoneNumbers().remove(PhoneNumberType.SCHOOL);
+                                            if (!phoneNumbers.containsKey(PhoneNumberType.SCHOOL)) {
+                                               phoneNumbers.remove(PhoneNumberType.SCHOOL);
                                             }
                                             break;
                                         case 4:
-                                            if (!contact.getPhoneNumbers().containsKey(PhoneNumberType.OTHER)) {
-                                                contact.getPhoneNumbers().remove(PhoneNumberType.OTHER);
+                                            if (!phoneNumbers.containsKey(PhoneNumberType.OTHER)) {
+                                                phoneNumbers.remove(PhoneNumberType.OTHER);
                                             }
                                             break;
                                         default:
@@ -210,7 +212,7 @@ public class ContactControllerImpl {
 
                         } else if (del == 1) {
 
-                            System.out.println(contact.getPhoneNumbers());
+                            System.out.println(phoneNumbers);
                             System.out.print("Choose phone numbers type");
                             ApplicationController.printPhoneNumbersType();
 
@@ -224,19 +226,19 @@ public class ContactControllerImpl {
                                     switch (typeNumber) {
                                         case 0:
 
-                                            phoneNumberController.deleteForPhoneNumber(PhoneNumberType.MOBILE, map);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.MOBILE, map,phoneNumbers);
                                             break;
                                         case 1:
-                                            phoneNumberController.deleteForPhoneNumber(PhoneNumberType.HOME, map);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.HOME, map,phoneNumbers);
                                             break;
                                         case 2:
-                                            phoneNumberController.deleteForPhoneNumber(PhoneNumberType.WORK, map);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.WORK, map,phoneNumbers);
                                             break;
                                         case 3:
-                                            phoneNumberController.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map,phoneNumbers);
                                             break;
                                         case 4:
-                                            phoneNumberController.deleteForPhoneNumber(PhoneNumberType.OTHER, map);
+                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.OTHER, map,phoneNumbers);
                                             break;
                                         default:
                                             System.out.println("\u001B[31m" + "Invalid type number.");
@@ -254,7 +256,7 @@ public class ContactControllerImpl {
                         }
                     }
                 case 3:
-                    emailController.emailUpdate(name, map);
+                    emailController.emailUpdate(name, map,emails);
                     System.out.println("\u001B[36m" + "The contact's email is updated.");
                     break;
                 case 4:
@@ -278,18 +280,18 @@ public class ContactControllerImpl {
 
                                     switch (typeEmail) {
                                         case 0:
-                                            if (!contact.getEmails().containsKey(EmailType.GMAIL)) {
-                                                contact.getEmails().remove(EmailType.GMAIL);
+                                            if (!emails.containsKey(EmailType.GMAIL)) {
+                                                emails.remove(EmailType.GMAIL);
                                             }
                                             break;
                                         case 1:
-                                            if (!contact.getEmails().containsKey(EmailType.ICLOUD)) {
-                                                contact.getEmails().remove(EmailType.ICLOUD);
+                                            if (!emails.containsKey(EmailType.ICLOUD)) {
+                                                emails.remove(EmailType.ICLOUD);
                                             }
                                             break;
                                         case 2:
-                                            if (!contact.getEmails().containsKey(EmailType.OTHER)) {
-                                                contact.getEmails().remove(EmailType.OTHER);
+                                            if (!emails.containsKey(EmailType.OTHER)) {
+                                                emails.remove(EmailType.OTHER);
                                             }
                                             break;
                                         default:
@@ -305,7 +307,7 @@ public class ContactControllerImpl {
 
                         } else if (del == 1) {
 
-                            System.out.println(contact.getEmails());
+                            System.out.println(emails);
                             System.out.print("Choose email type");
                             ApplicationController.printEmailType();
 
@@ -318,13 +320,13 @@ public class ContactControllerImpl {
 
                                     switch (typeNumber) {
                                         case 0:
-                                            emailController.deleteForEmail(EmailType.GMAIL, map);
+                                            emailController.deleteForEmail(EmailType.GMAIL, map,emails);
                                             break;
                                         case 1:
-                                            emailController.deleteForEmail(EmailType.ICLOUD, map);
+                                            emailController.deleteForEmail(EmailType.ICLOUD, map,emails);
                                             break;
                                         case 2:
-                                            emailController.deleteForEmail(EmailType.OTHER, map);
+                                            emailController.deleteForEmail(EmailType.OTHER, map,emails);
                                             break;
 
                                         default:
@@ -346,13 +348,13 @@ public class ContactControllerImpl {
                 case 5:
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
                     String newCompany = in.next();
-                    contact.setCompany(newCompany);
+                    company = newCompany;
                     System.out.println("\u001B[36m" + "The contact's company name is updated.");
                     break;
                 case 6:
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
                     String company = in.next();
-                    contact.setCompany(null);
+                    company = null;
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid choice. Input right number!");
@@ -363,7 +365,6 @@ public class ContactControllerImpl {
             System.out.println("input number from 0 to 4");
         }
     }
-
 
     /**
      * Delete contact
@@ -401,10 +402,5 @@ public class ContactControllerImpl {
                 break;
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return "\u001B[35m" + "CommandService{" + "name='" + name + '\'' + ", contact=" + contact + '}';
     }
 }

@@ -3,17 +3,18 @@ package model;
 import model.enums.EmailType;
 import model.enums.PhoneNumberType;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Contact {
+public class Contact implements Serializable {
 
     //Class fields
-    private Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
+    public Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
     private String company;
-    private Map<EmailType, Set<String>> emails = new HashMap<>();
+    public Map<EmailType, Set<String>> emails = new HashMap<>();
 
     /**
      * No argument constructor
@@ -75,10 +76,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "phoneNumbers=" + phoneNumbers +
-                ", company='" + company + '\'' +
-                ", emails=" + emails +
-                '}';
+        return  phoneNumbers  + company  + emails ;
     }
 }

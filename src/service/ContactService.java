@@ -3,6 +3,11 @@ package service;
 import controller.ContactController;
 import controller.impl.ContactControllerImpl;
 import model.Contact;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 
 public class ContactService implements ContactController {
@@ -26,7 +31,7 @@ public class ContactService implements ContactController {
     @Override
     public void update(Map<String, Contact> map) {
 
-        contactController.modify(map);
+        //contactController.modify(map);
     }
 
     @Override
@@ -34,4 +39,6 @@ public class ContactService implements ContactController {
 
         contactController.remove(map);
     }
+
+
 }

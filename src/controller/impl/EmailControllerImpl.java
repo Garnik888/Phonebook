@@ -10,7 +10,6 @@ import java.util.*;
 public class EmailControllerImpl {
 
     Scanner in = new Scanner(System.in);
-    Contact contact = new Contact();
 
     /**
      * Build email
@@ -39,7 +38,7 @@ public class EmailControllerImpl {
      * @param name String type
      * @param map  Map<String, Contact> map) type
      */
-    public void emailUpdate(String name, Map<String, Contact> map) {
+    public void emailUpdate(String name, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
         ApplicationController.printEmailType();
 
         String typeNumber;
@@ -56,13 +55,13 @@ public class EmailControllerImpl {
 
             switch (typeNumber) {
                 case "0":
-                    emailUpdateCase(name, EmailType.GMAIL, map);
+                    emailUpdateCase(name, EmailType.GMAIL, map,emails);
                     break;
                 case "1":
-                    emailUpdateCase(name, EmailType.ICLOUD, map);
+                    emailUpdateCase(name, EmailType.ICLOUD, map,emails);
                     break;
                 case "2":
-                    emailUpdateCase(name, EmailType.OTHER, map);
+                    emailUpdateCase(name, EmailType.OTHER, map,emails);
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
@@ -77,12 +76,12 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map) {
+    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
         System.out.println(map.get(name).getEmails().get(type));
         System.out.print("\u001B[34m" + "Input email which one do you want to update. -> ");
         String email = in.next();
 
-        while (!contact.getEmails().get(type).contains(email)) {
+        while (!emails.get(type).contains(email)) {
             System.out.print("\u001B[34m" + "Input right email! -> ");
             email = in.next();
         }
@@ -98,7 +97,7 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForEmail(EmailType type, Map<String, Contact> map) {
+    public void deleteForEmail(EmailType type, Map<String, Contact> map,Map<EmailType, Set<String>> emails) {
 
         String email;
 
@@ -106,9 +105,9 @@ public class EmailControllerImpl {
 
             System.out.print("Input email -> ");
             email = in.next();
-            if (!contact.getEmails().get(type).contains(email)) {
+            if (!emails.get(type).contains(email)) {
 
-                contact.getEmails().get(type).remove(email);
+                emails.get(type).remove(email);
 
                 break;
             } else {
@@ -122,11 +121,13 @@ public class EmailControllerImpl {
     /**
      * Map email editor
      */
-    public Map<EmailType, Set<String>> createEmailSet() {
+    public void createEmailSet(Map<EmailType, Set<String>> emails) {
+        Set<String> gmailSet = new HashSet<>();
+        Set<String> iCloudSet = new HashSet<>();
+        Set<String> otherSet = new HashSet<>();
 
-        Map<EmailType, Set<String>> emailMaps = new HashMap<>();
+
         System.out.print("\u001B[34m" + "Do you want to add email?(Y/N) -> ");
-        Set<String> emailSet = new HashSet<>();
 
         String yesNo;
 
@@ -137,8 +138,6 @@ public class EmailControllerImpl {
 
                 System.out.print("\u001B[34m" + "Input email -> ");
                 String email = in.next();
-
-                emailSet.add(email);
 
                 ApplicationController.printEmailType();
                 System.out.print("->");
@@ -152,13 +151,28 @@ public class EmailControllerImpl {
                     typeNumber = in.next();
                     switch (typeNumber) {
                         case "0":
-                            emailMapBuilder(emailMaps, EmailType.GMAIL, email);
+                            if (emails.containsKey(EmailType.GMAIL)){
+                                gmailSet.add(email);
+                            }else {
+                                gmailSet.add(email);
+                                emails.put(EmailType.GMAIL, gmailSet);
+                            }
                             break;
                         case "1":
-                            emailMapBuilder(emailMaps, EmailType.ICLOUD, email);
+                            if (emails.containsKey(EmailType.ICLOUD)){
+                                iCloudSet.add(email);
+                            }else {
+                                iCloudSet.add(email);
+                                emails.put(EmailType.ICLOUD, iCloudSet);
+                            }
                             break;
                         case "2":
-                            emailMapBuilder(emailMaps, EmailType.OTHER, email);
+                            if (emails.containsKey(EmailType.OTHER)){
+                                otherSet.add(email);
+                            }else {
+                                otherSet.add(email);
+                                emails.put(EmailType.OTHER, otherSet);
+                            }
                             break;
                         default:
                             System.out.println("\u001B[31m" + "Invalid type number.");
@@ -172,14 +186,14 @@ public class EmailControllerImpl {
 
                 System.out.println("\u001B[31m" + "Wrong choose, input Y/N");
             } else {
-
-                emailMapBuilder(emailMaps, EmailType.OTHER,
-                        "--------");
-
+                if (emails.containsKey(EmailType.OTHER)){
+                    otherSet.add("---");
+                }else {
+                    otherSet.add("----");
+                    emails.put(EmailType.OTHER, otherSet);
+                }
                 break;
             }
         }
-
-        return emailMaps;
     }
 }

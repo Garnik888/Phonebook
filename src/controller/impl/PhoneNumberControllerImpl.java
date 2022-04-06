@@ -3,38 +3,16 @@ package controller.impl;
 
 import controller.ApplicationController;
 import model.Contact;
+import model.enums.EmailType;
 import model.enums.PhoneNumberType;
 
 import java.util.*;
 
 public class PhoneNumberControllerImpl {
+
+
     Scanner in = new Scanner(System.in);
-    Contact contact = new Contact();
 
-    /**
-     * Build phone number
-     *
-     * @param type        PhoneNumberType Enum type
-     * @param phoneNumber String type
-     */
-    public void phoneNumberMapBuilder(Map<PhoneNumberType, Set<String>> phoneNumbers,
-                                      PhoneNumberType type, String phoneNumber) {
-/*
-        if (!contact.getPhoneNumbers().containsKey(type)) {
-            contact.getPhoneNumbers().put(type, phoneNumberSet);
-        } else {
-
-            contact.getPhoneNumbers().get(type).add(phoneNumber);
-        }
-        */
-        if (phoneNumbers.containsKey(type)) {
-            phoneNumbers.get(type).add(phoneNumber);
-        } else {
-            Set<String> phoneNumbersValues = new HashSet<>();
-            phoneNumbersValues.add(phoneNumber);
-            phoneNumbers.put(type, phoneNumbersValues);
-        }
-    }
 
     /**
      * phone number update
@@ -42,7 +20,7 @@ public class PhoneNumberControllerImpl {
      * @param name String type
      * @param map  Map<String, Contact> typr
      */
-    public void phoneNumberUpdate(String name, Map<String, Contact> map) {
+    public void phoneNumberUpdate(String name, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
         ApplicationController.printPhoneNumbersType();
 
@@ -58,19 +36,19 @@ public class PhoneNumberControllerImpl {
 
             switch (typeNumber) {
                 case "0":
-                    phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
+                    phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map,  phoneNumbers);
                     break;
                 case "1":
-                    phoneNumberUpdateCase(name, PhoneNumberType.HOME, map);
+                    phoneNumberUpdateCase(name, PhoneNumberType.HOME, map,phoneNumbers);
                     break;
                 case "2":
-                    phoneNumberUpdateCase(name, PhoneNumberType.WORK, map);
+                    phoneNumberUpdateCase(name, PhoneNumberType.WORK, map,phoneNumbers);
                     break;
                 case "3":
-                    phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map);
+                    phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map,phoneNumbers);
                     break;
                 case "4":
-                    phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
+                    phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map,phoneNumbers);
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
@@ -84,12 +62,12 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String, Contact> map) {
+    public void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
         System.out.println(map.get(name).getPhoneNumbers().get(type));
         System.out.print("\u001B[34m" + "Input phone number which one do you want to update. -> ");
         String phoneNumber = in.next();
-        while (!contact.getPhoneNumbers().get(type).contains(phoneNumber)) {
+        while (!phoneNumbers.get(type).contains(phoneNumber)) {
             System.out.print("\u001B[34m" + "Input right phone number! -> ");
             phoneNumber = in.next();
         }
@@ -105,7 +83,7 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map) {
+    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
         String number;
 
@@ -113,9 +91,9 @@ public class PhoneNumberControllerImpl {
 
             System.out.print("Input phone numbers -> ");
             number = in.next();
-            if (!contact.getPhoneNumbers().get(type).contains(number)) {
+            if (!phoneNumbers.get(type).contains(number)) {
 
-                contact.getPhoneNumbers().get(type).remove(number);
+                phoneNumbers.get(type).remove(number);
 
                 break;
             } else {
@@ -130,15 +108,16 @@ public class PhoneNumberControllerImpl {
     /**
      * Map phone number editor
      */
-    public Map<PhoneNumberType, Set<String>> createPhoneNumbers() {
+    public void createPhoneNumbers(Map<PhoneNumberType, Set<String>> phoneNumbers) {
 
-        Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
+        Set<String> mobileSet = new HashSet<>();
+        Set<String> homeSet = new HashSet<>();
+        Set<String> workSet = new HashSet<>();
+        Set<String> schoolSet = new HashSet<>();
+        Set<String> otherSet = new HashSet<>();
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
 
-        Set<String> phoneNums = new HashSet<>();
-        phoneNums.add(phoneNumber);
-        phoneNumbers.put(PhoneNumberType.MOBILE, phoneNums);
 
         System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");
 
@@ -163,19 +142,45 @@ public class PhoneNumberControllerImpl {
                     switch (typeNumber) {
 
                         case "0":
-                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.MOBILE, phoneNumber);
+
+                            if (phoneNumbers.containsKey(PhoneNumberType.MOBILE)){
+                                mobileSet.add(phoneNumber);
+                            }else {
+                                mobileSet.add(phoneNumber);
+                                phoneNumbers.put(PhoneNumberType.MOBILE, mobileSet);
+                            }
                             break;
                         case "1":
-                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.HOME, phoneNumber);
+                            if (phoneNumbers.containsKey(PhoneNumberType.HOME)){
+                                homeSet.add(phoneNumber);
+                            }else {
+                                homeSet.add(phoneNumber);
+                                phoneNumbers.put(PhoneNumberType.HOME, homeSet);
+                            }
                             break;
                         case "2":
-                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.WORK, phoneNumber);
+                            if (phoneNumbers.containsKey(PhoneNumberType.WORK)){
+                                workSet.add(phoneNumber);
+                            }else {
+                                workSet.add(phoneNumber);
+                                phoneNumbers.put(PhoneNumberType.WORK, workSet);
+                            }
                             break;
                         case "3":
-                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.SCHOOL, phoneNumber);
+                            if (phoneNumbers.containsKey(PhoneNumberType.SCHOOL)){
+                                schoolSet.add(phoneNumber);
+                            }else {
+                                schoolSet.add(phoneNumber);
+                                phoneNumbers.put(PhoneNumberType.SCHOOL, schoolSet);
+                            }
                             break;
                         case "4":
-                            phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.OTHER, phoneNumber);
+                            if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
+                                otherSet.add(phoneNumber);
+                            }else {
+                                otherSet.add(phoneNumber);
+                                phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
+                            }
                             break;
                         default:
                             System.out.println("\u001B[31m" + "Invalid type number.");
@@ -191,12 +196,15 @@ public class PhoneNumberControllerImpl {
                 System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
                 System.out.print("\u001B[34m" + "Input Y/N-> ");
             } else {
-
-                phoneNumberMapBuilder(phoneNumbers, PhoneNumberType.OTHER, phoneNumber);
+                if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
+                    otherSet.add(phoneNumber);
+                }else {
+                    otherSet.add(phoneNumber);
+                    phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
+                }
                 break;
             }
         }
 
-        return phoneNumbers;
     }
 }
