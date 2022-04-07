@@ -12,14 +12,15 @@ import java.util.Map;
 
 public class ContactService implements ContactController {
 
-
+    String name;
+    String company;
     ContactControllerImpl contactController = new ContactControllerImpl();
 
 
     @Override
     public void create(Map<String, Contact> map) {
 
-        contactController.add(map);
+        contactController.add(map,name,company);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ContactService implements ContactController {
 
     @Override
     public void update(Map<String, Contact> map) {
-       contactController.modify(map);
+       contactController.modify(map, company);
     }
 
     @Override

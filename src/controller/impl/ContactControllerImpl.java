@@ -5,6 +5,7 @@ import controller.ApplicationController;
 import model.Contact;
 import model.enums.EmailType;
 import model.enums.PhoneNumberType;
+import start.Menu;
 
 import java.io.*;
 import java.util.*;
@@ -14,10 +15,9 @@ public class ContactControllerImpl implements Serializable {
     Scanner in = new Scanner(System.in);
     PhoneNumberControllerImpl phoneNumbersImpl = new PhoneNumberControllerImpl();
     EmailControllerImpl emailController = new EmailControllerImpl();
-    String name;
-    String company;
 
-    public void add(Map<String, Contact> map) {
+
+    public void add(Map<String, Contact> map,String company, String name) {
 
 
         System.out.print("\u001B[34m" + "Input contact's name -> ");
@@ -114,7 +114,7 @@ public class ContactControllerImpl implements Serializable {
     }
 
 
-    public void modify(Map<String, Contact> map) {
+    public void modify(Map<String, Contact> map, String company) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
 
@@ -136,6 +136,8 @@ public class ContactControllerImpl implements Serializable {
         ApplicationController.printUpdateType();
 
         System.out.println("\u001B[34m" + "Choose number of operation which do you want to update?");
+
+
         String choice;
 
         boolean choiceType = true;
@@ -153,6 +155,7 @@ public class ContactControllerImpl implements Serializable {
                     while (!Validators.checkNameSize(newName)) {
                         System.out.println("\u001B[31m" + "Name's max size is 20 characters. Input again -> ");
                     }
+
                     map.put(newName, map.get(name));
                     map.remove(name);
 
@@ -160,7 +163,6 @@ public class ContactControllerImpl implements Serializable {
                     break;
 
                 case "1":
-
                     phoneNumbersImpl.phoneNumberUpdate(name, map);
                     System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                     break;
@@ -185,7 +187,6 @@ public class ContactControllerImpl implements Serializable {
 
                         switch (typeNumber) {
                             case "0":
-
                                 this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.MOBILE, map, name);
                                 break;
                             case "1":
@@ -212,6 +213,7 @@ public class ContactControllerImpl implements Serializable {
 
                     emailController.emailUpdate(name, map);
                     System.out.println("\u001B[36m" + "The contact's email is updated.");
+
                     break;
 
                 case "4":
@@ -267,7 +269,33 @@ public class ContactControllerImpl implements Serializable {
                     map.get(name).setCompany("");
                     System.out.println("The company's name is deleted!");
                     break;
+                default:
+                    System.out.println("\u001B[31m" + "Invalid choice. Input right number!");
             }
+
+            System.out.print("\u001B[34m" + "\nInsert Y/N if you want view commands list : -> ");
+
+            String yesNo;
+
+            while (true) {
+
+                yesNo = in.next();
+
+                if (yesNo.equalsIgnoreCase("y")) {
+                    Menu menu=new Menu();
+                    menu.start();
+                    break;
+                } else if (!yesNo.equalsIgnoreCase("n")) {
+
+                    System.out.print("\u001B[34m" + "Wrong choose, input Y/N -> ");
+                } else {
+
+                    break;
+                }
+
+            }
+
+
         }
     }
 

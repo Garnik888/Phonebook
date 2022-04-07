@@ -14,6 +14,7 @@ public class Menu implements Serializable {
     ApplicationAnswers applicationAnswers=new ApplicationAnswers();
     private final Scanner in = new Scanner(System.in);
 
+
     HashMap<String, Contact> phoneBook = new HashMap<>();
 
 
@@ -47,6 +48,7 @@ public class Menu implements Serializable {
                     break;
                 case "4":
                     applicationAnswers.delete(phoneBook);
+
                     break;
                 default:
                     System.out.println("\u001B[31m" + "\n****Invalid command number****\n");

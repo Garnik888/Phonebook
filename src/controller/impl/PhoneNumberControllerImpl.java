@@ -21,15 +21,15 @@ public class PhoneNumberControllerImpl {
      */
     public void phoneNumberUpdate(String name, Map<String, Contact> map) {
 
-        ApplicationController.printUpdateType();
-
         boolean isChoose = true;
         String typeNumber;
 
         while (isChoose) {
 
             isChoose = false;
-            System.out.println("\u001B[34m" + "Choose phone number type. -> ");
+            ApplicationController.printPhoneNumbersType();
+            System.out.print("\u001B[34m" + " -> ");
+
 
             String type;
             typeNumber = in.next();
@@ -37,32 +37,32 @@ public class PhoneNumberControllerImpl {
             switch (typeNumber) {
                 case "0":
                     type = "MOBILE";
-                  if(PhoneNumberType.MOBILE.equals(PhoneNumberType.valueOf(type))){
-                      phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
-                }
+                    if (PhoneNumberType.MOBILE.equals(PhoneNumberType.valueOf(type))) {
+                        phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
+                    }
 
                     break;
                 case "1":
                     type = "HOME";
-                    if(PhoneNumberType.HOME.equals(PhoneNumberType.valueOf(type))){
+                    if (PhoneNumberType.HOME.equals(PhoneNumberType.valueOf(type))) {
                         phoneNumberUpdateCase(name, PhoneNumberType.HOME, map);
                     }
                     break;
                 case "2":
                     type = "WORK";
-                    if(PhoneNumberType.WORK.equals(PhoneNumberType.valueOf(type))){
+                    if (PhoneNumberType.WORK.equals(PhoneNumberType.valueOf(type))) {
                         phoneNumberUpdateCase(name, PhoneNumberType.WORK, map);
                     }
                     break;
                 case "3":
                     type = "SCHOOL";
-                    if(PhoneNumberType.SCHOOL.equals(PhoneNumberType.valueOf(type))){
+                    if (PhoneNumberType.SCHOOL.equals(PhoneNumberType.valueOf(type))) {
                         phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map);
                     }
                     break;
                 case "4":
                     type = "OTHER";
-                    if(PhoneNumberType.OTHER.equals(PhoneNumberType.valueOf(type))){
+                    if (PhoneNumberType.OTHER.equals(PhoneNumberType.valueOf(type))) {
                         phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
                     }
                     break;
@@ -91,9 +91,9 @@ public class PhoneNumberControllerImpl {
         }
         System.out.print("\u001B[34m" + "Input new phone number. -> ");
         String newPhoneNumber = in.next();
-        while (!Validators.checkPhoneNumber(newPhoneNumber)){
+        while (!Validators.checkPhoneNumber(newPhoneNumber)) {
             System.out.println("Incorrect phone number! Input again ->");
-            newPhoneNumber=in.next();
+            newPhoneNumber = in.next();
         }
         map.get(name).getPhoneNumbers().get(type).remove(phoneNumber);
         map.get(name).getPhoneNumbers().get(type).add(newPhoneNumber);
@@ -105,16 +105,16 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map,String name) {
+    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map, String name) {
 
         String number;
 
         while (true) {
             System.out.print("Input phone numbers -> ");
             number = in.next();
-            while (!Validators.checkPhoneNumber(number)){
+            while (!Validators.checkPhoneNumber(number)) {
                 System.out.println("Incorrect phone number! Input again ->");
-                number=in.next();
+                number = in.next();
             }
             if (!map.get(name).getPhoneNumbers().get(type).contains(number)) {
 
@@ -144,13 +144,13 @@ public class PhoneNumberControllerImpl {
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
 
-        while (!Validators.checkPhoneNumber(phoneNumber)){
-            System.out.print("\u001B[31m"+"Incorrect phone number! Input again ->");
-            phoneNumber=in.next();
+        while (!Validators.checkPhoneNumber(phoneNumber)) {
+            System.out.print("\u001B[31m" + "Incorrect phone number! Input again ->" + "\u001B[0m");
+            phoneNumber = in.next();
         }
         boolean isTypeChoose;
 
-        System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");
+        System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> " + "\u001B[0m");
 
         String yesNo;
 
@@ -173,48 +173,48 @@ public class PhoneNumberControllerImpl {
 
                         case "0":
 
-                            if (phoneNumbers.containsKey(PhoneNumberType.MOBILE)){
+                            if (phoneNumbers.containsKey(PhoneNumberType.MOBILE)) {
                                 phoneNumbers.get(PhoneNumberType.MOBILE).add(phoneNumber);
-                            }else {
+                            } else {
                                 mobileSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.MOBILE, mobileSet);
                             }
                             break;
                         case "1":
-                            if (phoneNumbers.containsKey(PhoneNumberType.HOME)){
+                            if (phoneNumbers.containsKey(PhoneNumberType.HOME)) {
                                 phoneNumbers.get(PhoneNumberType.HOME).add(phoneNumber);
-                            }else {
+                            } else {
                                 homeSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.HOME, homeSet);
                             }
                             break;
                         case "2":
-                            if (phoneNumbers.containsKey(PhoneNumberType.WORK)){
+                            if (phoneNumbers.containsKey(PhoneNumberType.WORK)) {
                                 phoneNumbers.get(PhoneNumberType.WORK).add(phoneNumber);
-                            }else {
+                            } else {
                                 workSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.WORK, workSet);
                             }
                             break;
                         case "3":
-                            if (phoneNumbers.containsKey(PhoneNumberType.SCHOOL)){
+                            if (phoneNumbers.containsKey(PhoneNumberType.SCHOOL)) {
                                 phoneNumbers.get(PhoneNumberType.SCHOOL).add(phoneNumber);
-                            }else {
+                            } else {
                                 schoolSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.SCHOOL, schoolSet);
                             }
                             break;
                         case "4":
-                            if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
+                            if (phoneNumbers.containsKey(PhoneNumberType.OTHER)) {
                                 phoneNumbers.get(PhoneNumberType.OTHER).add(phoneNumber);
-                            }else {
+                            } else {
                                 otherSet.add(phoneNumber);
                                 phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
                             }
                             break;
                         default:
-                            System.out.println("\u001B[31m" + "Invalid type number.");
-                            System.out.print("\u001B[34m" + "Input new number -> ");
+                            System.out.println("\u001B[31m" + "Invalid type number." + "\u001B[0m");
+                            System.out.print("\u001B[34m" + "Input new number -> " + "\u001B[0m");
                             isTypeChoose = true;
                             break;
                     }
@@ -222,12 +222,13 @@ public class PhoneNumberControllerImpl {
                 break;
 
             } else if (yesNo.equalsIgnoreCase("n")) {
-                if (phoneNumbers.containsKey(PhoneNumberType.OTHER)){
+                if (phoneNumbers.containsKey(PhoneNumberType.OTHER)) {
                     phoneNumbers.get(PhoneNumberType.OTHER).add(phoneNumber);
-                }else {
+                } else {
                     otherSet.add(phoneNumber);
                     phoneNumbers.put(PhoneNumberType.OTHER, otherSet);
-                } break;
+                }
+                break;
             } else {
                 System.out.print("\u001B[31m" + "Wrong choose! Input Y/N-> ");
                 System.out.print("\u001B[34m" + "Input Y/N-> ");
