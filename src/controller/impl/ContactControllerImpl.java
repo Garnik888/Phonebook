@@ -17,7 +17,7 @@ public class ContactControllerImpl implements Serializable {
     EmailControllerImpl emailController = new EmailControllerImpl();
 
 
-    public void add(Map<String, Contact> map,String company, String name) {
+    public void add(Map<String, Contact> map, String company, String name) {
 
 
         System.out.print("\u001B[34m" + "Input contact's name -> ");
@@ -114,7 +114,7 @@ public class ContactControllerImpl implements Serializable {
     }
 
 
-    public void modify(Map<String, Contact> map, String company) {
+    public void modify(Map<String, Contact> map) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
 
@@ -137,7 +137,6 @@ public class ContactControllerImpl implements Serializable {
 
         System.out.println("\u001B[34m" + "Choose number of operation which do you want to update?");
 
-
         String choice;
 
         boolean choiceType = true;
@@ -157,6 +156,7 @@ public class ContactControllerImpl implements Serializable {
                     }
 
                     map.put(newName, map.get(name));
+
                     map.remove(name);
 
                     System.out.println("\u001B[36m" + "The contact's name is updated.");
@@ -170,7 +170,6 @@ public class ContactControllerImpl implements Serializable {
                 case "2":
 
                     System.out.println(map.get(name).getPhoneNumbers());
-                    System.out.print("Choose phone numbers type");
                     ApplicationController.printPhoneNumbersType();
 
                     String typeNumber;
@@ -258,7 +257,7 @@ public class ContactControllerImpl implements Serializable {
                         System.out.print("Name's max size is 20 characters. Input again ->");
                         newCompany = in.next();
                     }
-                    company = newCompany;
+                    map.get(name).setCompany(newCompany);
                     System.out.println("\u001B[36m" + "The contact's company name is updated.");
                     break;
 
@@ -282,7 +281,7 @@ public class ContactControllerImpl implements Serializable {
                 yesNo = in.next();
 
                 if (yesNo.equalsIgnoreCase("y")) {
-                    Menu menu=new Menu();
+                    Menu menu = new Menu();
                     menu.start();
                     break;
                 } else if (!yesNo.equalsIgnoreCase("n")) {
@@ -307,6 +306,12 @@ public class ContactControllerImpl implements Serializable {
 
     public void remove(Map<String, Contact> map) {
 
+        Map<String, Contact> map1 = new TreeMap<>(map);
+
+        for (Map.Entry<String, Contact> contactName : map1.entrySet()) {
+            System.out.println(contactName.getKey());
+        }
+
         while (true) {
 
             System.out.print("\u001B[34m" + "Input contact's name which you want to delete -> ");
@@ -319,7 +324,7 @@ public class ContactControllerImpl implements Serializable {
                 name = in.next();
             }
 
-            System.out.println("\u001B[34m" + "Are you sure (Y/N) -> ");
+            System.out.print("\u001B[34m" + "Are you sure (Y/N) -> ");
             String yesNo = in.next();
 
             if (yesNo.equalsIgnoreCase("y")) {

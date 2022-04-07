@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ContactService implements ContactController {
@@ -30,8 +31,8 @@ public class ContactService implements ContactController {
     }
 
     @Override
-    public void update(Map<String, Contact> map) {
-       contactController.modify(map, company);
+    public void update(HashMap<String, Contact> map) {
+       contactController.modify(map);
     }
 
     @Override
