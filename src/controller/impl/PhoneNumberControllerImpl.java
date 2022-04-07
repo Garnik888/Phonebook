@@ -3,8 +3,8 @@ package controller.impl;
 
 import controller.ApplicationController;
 import model.Contact;
-import model.enums.EmailType;
 import model.enums.PhoneNumberType;
+import Validators.Validators;
 
 import java.util.*;
 
@@ -67,12 +67,17 @@ public class PhoneNumberControllerImpl {
         System.out.println(map.get(name).getPhoneNumbers().get(type));
         System.out.print("\u001B[34m" + "Input phone number which one do you want to update. -> ");
         String phoneNumber = in.next();
+
         while (!phoneNumbers.get(type).contains(phoneNumber)) {
             System.out.print("\u001B[34m" + "Input right phone number! -> ");
             phoneNumber = in.next();
         }
         System.out.print("\u001B[34m" + "Input new phone number. -> ");
         String newPhoneNumber = in.next();
+        while (!Validators.checkPhoneNumber(newPhoneNumber)){
+            System.out.println("Incorrect phone number! Input again ->");
+            newPhoneNumber=in.next();
+        }
         map.get(name).getPhoneNumbers().get(type).remove(phoneNumber);
         map.get(name).getPhoneNumbers().get(type).add(newPhoneNumber);
     }
@@ -88,9 +93,12 @@ public class PhoneNumberControllerImpl {
         String number;
 
         while (true) {
-
             System.out.print("Input phone numbers -> ");
             number = in.next();
+            while (!Validators.checkPhoneNumber(number)){
+                System.out.println("Incorrect phone number! Input again ->");
+                number=in.next();
+            }
             if (!phoneNumbers.get(type).contains(number)) {
 
                 phoneNumbers.get(type).remove(number);
@@ -117,6 +125,11 @@ public class PhoneNumberControllerImpl {
         Set<String> otherSet = new HashSet<>();
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
+
+        while (!Validators.checkPhoneNumber(phoneNumber)){
+            System.out.print("\u001B[31m"+"Incorrect phone number! Input again ->");
+            phoneNumber=in.next();
+        }
         boolean isTypeChoose;
 
         System.out.print("\u001B[34m" + "Do you want to add phone number Type?(Y/N) -> ");

@@ -1,5 +1,6 @@
 package controller.impl;
 
+import Validators.Validators;
 import controller.ApplicationController;
 import model.Contact;
 import model.enums.EmailType;
@@ -67,6 +68,10 @@ public class EmailControllerImpl {
         }
         System.out.print("\u001B[34m" + "Input new email. -> ");
         String newEmail = in.next();
+        while (!Validators.checkEmail(newEmail)) {
+            System.out.print("Incorrect email! Input again ->");
+            newEmail = in.next();
+        }
         map.get(name).getEmails().get(type).remove(email);
         map.get(name).getEmails().get(type).add(newEmail);
     }
@@ -92,7 +97,7 @@ public class EmailControllerImpl {
                 break;
             } else {
 
-                System.out.println("Incorrect number");
+                System.out.println("Incorrect email!");
             }
 
         }
@@ -118,6 +123,11 @@ public class EmailControllerImpl {
 
                 System.out.print("\u001B[34m" + "Input email -> ");
                 String email = in.next();
+
+                while (!Validators.checkEmail(email)) {
+                    System.out.print("Incorrect email! Input again ->");
+                    email = in.next();
+                }
 
                 ApplicationController.printEmailType();
                 System.out.print("->");

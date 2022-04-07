@@ -8,7 +8,7 @@ import java.util.Map;
 public class FileInputOutput {
     public static void writeContact(HashMap<String, Contact> map) {
         try {
-            File fileOne = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile");
+            File fileOne = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile.txt");
             FileOutputStream fos = new FileOutputStream(fileOne);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 

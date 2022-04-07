@@ -1,14 +1,16 @@
 package controller.impl;
 
+import Validators.Validators;
 import controller.ApplicationController;
 import model.Contact;
 import model.enums.EmailType;
 import model.enums.PhoneNumberType;
 
+import javax.xml.validation.Validator;
 import java.io.*;
 import java.util.*;
 
-public class ContactControllerImpl implements Serializable {
+public class ContactControllerImpl {
 
     Scanner in = new Scanner(System.in);
     PhoneNumberControllerImpl phoneNumbers = new PhoneNumberControllerImpl();
@@ -17,10 +19,12 @@ public class ContactControllerImpl implements Serializable {
     String company;
 
     public void add(Map<String, Contact> map) {
-
-
         System.out.print("\u001B[34m" + "Input contact's name -> ");
         name = in.next();
+        while (!Validators.checkNameSize(name)) {
+            System.out.print("Name's max size is 20 characters. Input again ->");
+            name = in.next();
+        }
 
         Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
         Map<EmailType, Set<String>> emails = new HashMap<>();
@@ -76,6 +80,10 @@ public class ContactControllerImpl implements Serializable {
 
                 System.out.print("\u001B[34m" + "Input company name  -> ");
                 company = in.nextLine();
+                while (!Validators.checkNameSize(company)) {
+                    System.out.print("Company's name max size is 20 character. Input again ->");
+                    company = in.next();
+                }
                 break;
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
@@ -145,6 +153,10 @@ public class ContactControllerImpl implements Serializable {
                 case 0:
                     System.out.println("\u001B[34m" + "Input contact's new name. ->");
                     String newName = in.next();
+                    while (!Validators.checkNameSize(newName)) {
+                        System.out.print("Name's max size is 20 characters. Input again ->");
+                        newName = in.next();
+                    }
                     map.put(newName, map.get(name));
                     map.remove(name);
                     System.out.println("\u001B[36m" + "The contact's name is updated.");
@@ -154,7 +166,7 @@ public class ContactControllerImpl implements Serializable {
                     System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                     break;
                 case 2:
-                    System.out.println("\u001B[36m" + "If tou want delete ALL phone typ input 0");
+                    System.out.println("\u001B[36m" + "If tou want delete ALL phone type input 0");
                     System.out.println("\u001B[36m" + "If tou want delete phone number input 1");
 
                     while (true) {
@@ -348,6 +360,10 @@ public class ContactControllerImpl implements Serializable {
                 case 5:
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
                     String newCompany = in.next();
+                    while (!Validators.checkNameSize(newCompany)) {
+                        System.out.print("Name's max size is 20 characters. Input again ->");
+                        newCompany = in.next();
+                    }
                     company = newCompany;
                     System.out.println("\u001B[36m" + "The contact's company name is updated.");
                     break;
