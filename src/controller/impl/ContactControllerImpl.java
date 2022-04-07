@@ -113,7 +113,6 @@ public class ContactControllerImpl implements Serializable {
 
     }
 
-
     public void modify(Map<String, Contact> map) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
@@ -274,30 +273,6 @@ public class ContactControllerImpl implements Serializable {
                     choiceType =true;
 
             }
-
-            System.out.print("\u001B[34m" + "\nInsert Y/N if you want view commands list : -> ");
-
-            String yesNo;
-
-            while (true) {
-
-                yesNo = in.next();
-
-                if (yesNo.equalsIgnoreCase("y")) {
-                    Menu menu = new Menu();
-                    menu.start();
-                    break;
-                } else if (!yesNo.equalsIgnoreCase("n")) {
-
-                    System.out.print("\u001B[34m" + "Wrong choose, input Y/N -> ");
-                } else {
-
-                    break;
-                }
-
-            }
-
-
         }
     }
 

@@ -104,11 +104,8 @@ public class PhoneNumberControllerImpl {
         while (true) {
             System.out.print("Input phone numbers -> ");
             number = in.next();
-            while (!Validators.checkPhoneNumber(number)) {
-                System.out.println("Incorrect phone number! Input again ->");
-                number = in.next();
-            }
-            if (!map.get(name).getPhoneNumbers().get(type).contains(number)) {
+
+            if (map.get(name).getPhoneNumbers().get(type).contains(number)) {
 
                 map.get(name).getPhoneNumbers().get(type).remove(number);
 

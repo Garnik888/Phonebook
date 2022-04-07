@@ -4,11 +4,6 @@ import controller.ContactController;
 import controller.impl.ContactControllerImpl;
 import model.Contact;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ContactService implements ContactController {
