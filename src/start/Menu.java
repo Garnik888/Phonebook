@@ -15,7 +15,7 @@ public class Menu implements Serializable {
     private final Scanner in = new Scanner(System.in);
 
 
-    HashMap<String, Contact> phoneBook = new HashMap<>();
+    Map<String, Contact> phoneBook = new HashMap<>();
 
 
     public void start() {

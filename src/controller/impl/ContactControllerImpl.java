@@ -143,6 +143,7 @@ public class ContactControllerImpl implements Serializable {
 
         while (choiceType) {
 
+            choiceType = false;
             choice = in.next();
 
             switch (choice) {
@@ -270,6 +271,8 @@ public class ContactControllerImpl implements Serializable {
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid choice. Input right number!");
+                    choiceType =true;
+
             }
 
             System.out.print("\u001B[34m" + "\nInsert Y/N if you want view commands list : -> ");

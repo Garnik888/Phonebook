@@ -17,22 +17,22 @@ public class ContactService implements ContactController {
     String company;
     ContactControllerImpl contactController = new ContactControllerImpl();
 
-
     @Override
     public void create(Map<String, Contact> map) {
 
-        contactController.add(map,name,company);
+        contactController.add(map, name, company);
     }
 
     @Override
     public void get(Map<String, Contact> map) {
-        contactController.search(map);
 
+        contactController.search(map);
     }
 
     @Override
-    public void update(HashMap<String, Contact> map) {
-       contactController.modify(map);
+    public void update(Map<String, Contact> map) {
+
+        contactController.modify(map);
     }
 
     @Override

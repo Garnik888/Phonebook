@@ -3,14 +3,13 @@ package start;
 import model.Contact;
 import service.ContactService;
 
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class ApplicationAnswers {
     ContactService contactService = new ContactService();
     Scanner in = new Scanner(System.in);
 
-    public void create(HashMap<String, Contact> phoneBook) {
+    public void create(Map<String, Contact> phoneBook) {
         System.out.print("\u001B[34m" + "Are you sure to crate contact(Y/N) -> ");
 
         String yesNo;
@@ -34,7 +33,7 @@ public class ApplicationAnswers {
     }
 
 
-    public void get(HashMap<String, Contact> phoneBook) {
+    public void get(Map<String, Contact> phoneBook) {
         System.out.print("\u001B[34m" + "Are you sure to get contact(Y/N) -> ");
 
         String yesNo;
@@ -57,7 +56,7 @@ public class ApplicationAnswers {
 
     }
 
-    public void update(HashMap<String, Contact> phoneBook) {
+    public void update(Map<String, Contact> phoneBook) {
         System.out.print("\u001B[34m" + "Are you sure to update contact(Y/N) -> ");
 
         String yesNo;
@@ -80,7 +79,7 @@ public class ApplicationAnswers {
 
     }
 
-    public void delete(HashMap<String, Contact> phoneBook) {
+    public void delete(Map<String, Contact> phoneBook) {
         System.out.print("\u001B[34m" + "Are you sure to delete contact(Y/N) -> ");
 
         String yesNo;

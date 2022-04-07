@@ -24,47 +24,36 @@ public class PhoneNumberControllerImpl {
         boolean isChoose = true;
         String typeNumber;
 
+        ApplicationController.printPhoneNumbersType();
+
         while (isChoose) {
 
             isChoose = false;
-            ApplicationController.printPhoneNumbersType();
+
             System.out.print("\u001B[34m" + " -> ");
 
-
-            String type;
             typeNumber = in.next();
 
             switch (typeNumber) {
                 case "0":
-                    type = "MOBILE";
-                    if (PhoneNumberType.MOBILE.equals(PhoneNumberType.valueOf(type))) {
-                        phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
-                    }
 
+                    phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
                     break;
                 case "1":
-                    type = "HOME";
-                    if (PhoneNumberType.HOME.equals(PhoneNumberType.valueOf(type))) {
-                        phoneNumberUpdateCase(name, PhoneNumberType.HOME, map);
-                    }
+
+                    phoneNumberUpdateCase(name, PhoneNumberType.HOME, map);
                     break;
                 case "2":
-                    type = "WORK";
-                    if (PhoneNumberType.WORK.equals(PhoneNumberType.valueOf(type))) {
-                        phoneNumberUpdateCase(name, PhoneNumberType.WORK, map);
-                    }
+
+                    phoneNumberUpdateCase(name, PhoneNumberType.WORK, map);
                     break;
                 case "3":
-                    type = "SCHOOL";
-                    if (PhoneNumberType.SCHOOL.equals(PhoneNumberType.valueOf(type))) {
-                        phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map);
-                    }
+
+                    phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map);
                     break;
                 case "4":
-                    type = "OTHER";
-                    if (PhoneNumberType.OTHER.equals(PhoneNumberType.valueOf(type))) {
-                        phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
-                    }
+
+                    phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
@@ -78,8 +67,8 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String,
-            Contact> map) {
+    public void phoneNumberUpdateCase(String name, PhoneNumberType type,
+                                      Map<String, Contact> map) {
 
         System.out.println(map.get(name).getPhoneNumbers().get(type));
         System.out.print("\u001B[34m" + "Input phone number which one do you want to update. -> ");
@@ -89,12 +78,15 @@ public class PhoneNumberControllerImpl {
             System.out.print("\u001B[34m" + "Input right phone number! -> ");
             phoneNumber = in.next();
         }
+
         System.out.print("\u001B[34m" + "Input new phone number. -> ");
         String newPhoneNumber = in.next();
+
         while (!Validators.checkPhoneNumber(newPhoneNumber)) {
             System.out.println("Incorrect phone number! Input again ->");
             newPhoneNumber = in.next();
         }
+
         map.get(name).getPhoneNumbers().get(type).remove(phoneNumber);
         map.get(name).getPhoneNumbers().get(type).add(newPhoneNumber);
     }

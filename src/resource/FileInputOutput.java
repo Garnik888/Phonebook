@@ -9,7 +9,7 @@ public class FileInputOutput {
 
     private final static String FILE = "src/resource/ContactFile";
 
-    public static void writeContact(HashMap<String, Contact> map) {
+    public static void writeContact(Map<String, Contact> map) {
         try {
             File fileOne = new File(FILE);
             FileOutputStream fos = new FileOutputStream(fileOne);
