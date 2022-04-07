@@ -249,6 +249,7 @@ public class ContactControllerImpl implements Serializable {
                     break;
 
                 case "5":
+                    System.out.println(map.get(name).getCompany());
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
                     String newCompany = in.next();
                     while (!Validators.checkNameSize(newCompany)) {
@@ -260,7 +261,8 @@ public class ContactControllerImpl implements Serializable {
                     break;
 
                 case "6":
-                    System.out.println("\u001B[34m" + "Input company's new name. ->");
+                    System.out.println(map.get(name).getCompany());
+                    System.out.println("\u001B[34m" + "Input company's  name. ->");
                     name = in.next();
                     map.get(name).setCompany("");
                     System.out.println("The company's name is deleted!");

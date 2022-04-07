@@ -38,7 +38,7 @@ public class ApplicationController {
                 + UpdateCommandsEnum.PHONE_NUMBER_UPDATE.ordinal() + " FOR update PhoneNumber" + "\n" + "INPUT "
                 + UpdateCommandsEnum.PHONE_NUMBER_DELETE.ordinal() + " FOR delete PhoneNumber" + "\n" + "INPUT "
                 + UpdateCommandsEnum.EMAIL_UPDATE.ordinal() + " FOR update Email" + "\n" + "INPUT "
-                + UpdateCommandsEnum.COMPANY_NAME_UPDATE.ordinal() + " FOR update company name" + "\u001B[0m"
+                + UpdateCommandsEnum.COMPANY_NAME_UPDATE.ordinal() + " FOR update company name"
                 + "\n" + "INPUT "
                 + UpdateCommandsEnum.COMPANY_NAME_DELETE.ordinal() +
                 " FOR delete company name" + "\u001B[0m");
