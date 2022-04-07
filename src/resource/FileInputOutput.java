@@ -6,9 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileInputOutput {
+
+    private final static String FILE = "src/resource/ContactFile";
+
     public static void writeContact(HashMap<String, Contact> map) {
         try {
-            File fileOne = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile.txt");
+            File fileOne = new File(FILE);
             FileOutputStream fos = new FileOutputStream(fileOne);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
@@ -25,7 +28,7 @@ public class FileInputOutput {
 
     public static HashMap<String, Contact> readContacts(Map<String, Contact> mapInFile) {
         try {
-            File toRead = new File("C:\\Users\\User\\IdeaProjects\\Phonebookf\\src\\resource\\ContactFile");
+            File toRead = new File(FILE);
             FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
             mapInFile = (HashMap<String, Contact>) ois.readObject();

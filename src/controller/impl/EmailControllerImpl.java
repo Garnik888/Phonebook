@@ -19,11 +19,12 @@ public class EmailControllerImpl {
      * @param name String type
      * @param map  Map<String, Contact> map) type
      */
-    public void emailUpdate(String name, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
+    public void emailUpdate(String name, Map<String, Contact> map) {
         ApplicationController.printEmailType();
 
-        String typeNumber;
+        String type;
 
+        String typeEmail;
         boolean isTypeChoose = true;
 
         while (isTypeChoose) {
@@ -32,18 +33,26 @@ public class EmailControllerImpl {
 
             System.out.println("\u001B[34m" + "Choose email type -> ");
 
-            typeNumber = in.next();
+            type = in.next();
 
-            switch (typeNumber) {
+            switch (type) {
                 case "0":
-                    emailUpdateCase(name, EmailType.GMAIL, map, emails);
+                    typeEmail = "GMAIL";
+                    if (EmailType.GMAIL.equals(EmailType.valueOf(typeEmail))) {
+                        emailUpdateCase(name, EmailType.GMAIL, map);
+                    }
                     break;
                 case "1":
-                    emailUpdateCase(name, EmailType.ICLOUD, map, emails);
+                    typeEmail = "ICLOUD";
+                    if (EmailType.ICLOUD.equals(EmailType.valueOf(typeEmail))) {
+                        emailUpdateCase(name, EmailType.ICLOUD, map);
+                    }
                     break;
                 case "2":
-                    emailUpdateCase(name, EmailType.OTHER, map, emails);
-                    break;
+                    typeEmail = "OTHER";
+                    if (EmailType.OTHER.equals(EmailType.valueOf(typeEmail))) {
+                        emailUpdateCase(name, EmailType.OTHER, map);
+                    }
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
                     isTypeChoose = true;
@@ -57,12 +66,12 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
+    public void emailUpdateCase(String name, EmailType type, Map<String, Contact> map) {
         System.out.println(map.get(name).getEmails().get(type));
         System.out.print("\u001B[34m" + "Input email which one do you want to update. -> ");
         String email = in.next();
 
-        while (!emails.get(type).contains(email)) {
+        while (!map.get(name).getEmails().get(type).contains(email)) {
             System.out.print("\u001B[34m" + "Input right email! -> ");
             email = in.next();
         }
@@ -82,7 +91,7 @@ public class EmailControllerImpl {
      * @param type EmailType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForEmail(EmailType type, Map<String, Contact> map, Map<EmailType, Set<String>> emails) {
+    public void deleteForEmail(EmailType type, Map<String, Contact> map, String name) {
 
         String email;
 
@@ -90,9 +99,9 @@ public class EmailControllerImpl {
 
             System.out.print("Input email -> ");
             email = in.next();
-            if (!emails.get(type).contains(email)) {
+            if (!map.get(name).getEmails().get(type).contains(email)) {
 
-                emails.get(type).remove(email);
+                map.get(name).getEmails().get(type).remove(email);
 
                 break;
             } else {

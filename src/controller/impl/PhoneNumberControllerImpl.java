@@ -13,16 +13,15 @@ public class PhoneNumberControllerImpl {
 
     Scanner in = new Scanner(System.in);
 
-
     /**
      * phone number update
      *
      * @param name String type
      * @param map  Map<String, Contact> typr
      */
-    public void phoneNumberUpdate(String name, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
+    public void phoneNumberUpdate(String name, Map<String, Contact> map) {
 
-        ApplicationController.printPhoneNumbersType();
+        ApplicationController.printUpdateType();
 
         boolean isChoose = true;
         String typeNumber;
@@ -32,23 +31,40 @@ public class PhoneNumberControllerImpl {
             isChoose = false;
             System.out.println("\u001B[34m" + "Choose phone number type. -> ");
 
+            String type;
             typeNumber = in.next();
 
             switch (typeNumber) {
                 case "0":
-                    phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map,  phoneNumbers);
+                    type = "MOBILE";
+                  if(PhoneNumberType.MOBILE.equals(PhoneNumberType.valueOf(type))){
+                      phoneNumberUpdateCase(name, PhoneNumberType.MOBILE, map);
+                }
+
                     break;
                 case "1":
-                    phoneNumberUpdateCase(name, PhoneNumberType.HOME, map,phoneNumbers);
+                    type = "HOME";
+                    if(PhoneNumberType.HOME.equals(PhoneNumberType.valueOf(type))){
+                        phoneNumberUpdateCase(name, PhoneNumberType.HOME, map);
+                    }
                     break;
                 case "2":
-                    phoneNumberUpdateCase(name, PhoneNumberType.WORK, map,phoneNumbers);
+                    type = "WORK";
+                    if(PhoneNumberType.WORK.equals(PhoneNumberType.valueOf(type))){
+                        phoneNumberUpdateCase(name, PhoneNumberType.WORK, map);
+                    }
                     break;
                 case "3":
-                    phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map,phoneNumbers);
+                    type = "SCHOOL";
+                    if(PhoneNumberType.SCHOOL.equals(PhoneNumberType.valueOf(type))){
+                        phoneNumberUpdateCase(name, PhoneNumberType.SCHOOL, map);
+                    }
                     break;
                 case "4":
-                    phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map,phoneNumbers);
+                    type = "OTHER";
+                    if(PhoneNumberType.OTHER.equals(PhoneNumberType.valueOf(type))){
+                        phoneNumberUpdateCase(name, PhoneNumberType.OTHER, map);
+                    }
                     break;
                 default:
                     System.out.println("\u001B[31m" + "Invalid type number.");
@@ -62,13 +78,14 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
+    public void phoneNumberUpdateCase(String name, PhoneNumberType type, Map<String,
+            Contact> map) {
 
         System.out.println(map.get(name).getPhoneNumbers().get(type));
         System.out.print("\u001B[34m" + "Input phone number which one do you want to update. -> ");
         String phoneNumber = in.next();
 
-        while (!phoneNumbers.get(type).contains(phoneNumber)) {
+        while (!map.get(name).getPhoneNumbers().get(type).contains(phoneNumber)) {
             System.out.print("\u001B[34m" + "Input right phone number! -> ");
             phoneNumber = in.next();
         }
@@ -88,7 +105,7 @@ public class PhoneNumberControllerImpl {
      * @param type PhoneNumberType type
      * @param map  Map<String, Contact> type
      */
-    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map, Map<PhoneNumberType, Set<String>> phoneNumbers) {
+    public void deleteForPhoneNumber(PhoneNumberType type, Map<String, Contact> map,String name) {
 
         String number;
 
@@ -99,9 +116,9 @@ public class PhoneNumberControllerImpl {
                 System.out.println("Incorrect phone number! Input again ->");
                 number=in.next();
             }
-            if (!phoneNumbers.get(type).contains(number)) {
+            if (!map.get(name).getPhoneNumbers().get(type).contains(number)) {
 
-                phoneNumbers.get(type).remove(number);
+                map.get(name).getPhoneNumbers().get(type).remove(number);
 
                 break;
             } else {
@@ -123,6 +140,7 @@ public class PhoneNumberControllerImpl {
         Set<String> workSet = new HashSet<>();
         Set<String> schoolSet = new HashSet<>();
         Set<String> otherSet = new HashSet<>();
+
         System.out.print("\u001B[34m" + "Input phone number -> ");
         String phoneNumber = in.next();
 

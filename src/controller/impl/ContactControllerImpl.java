@@ -6,29 +6,26 @@ import model.Contact;
 import model.enums.EmailType;
 import model.enums.PhoneNumberType;
 
-import javax.xml.validation.Validator;
 import java.io.*;
 import java.util.*;
 
-public class ContactControllerImpl {
+public class ContactControllerImpl implements Serializable {
 
     Scanner in = new Scanner(System.in);
-    PhoneNumberControllerImpl phoneNumbers = new PhoneNumberControllerImpl();
+    PhoneNumberControllerImpl phoneNumbersImpl = new PhoneNumberControllerImpl();
     EmailControllerImpl emailController = new EmailControllerImpl();
     String name;
     String company;
 
     public void add(Map<String, Contact> map) {
+
+
         System.out.print("\u001B[34m" + "Input contact's name -> ");
         name = in.next();
-        while (!Validators.checkNameSize(name)) {
-            System.out.print("Name's max size is 20 characters. Input again ->");
-            name = in.next();
-        }
 
         Map<PhoneNumberType, Set<String>> phoneNumbers = new HashMap<>();
         Map<EmailType, Set<String>> emails = new HashMap<>();
-        this.phoneNumbers.createPhoneNumbers(phoneNumbers);
+        this.phoneNumbersImpl.createPhoneNumbers(phoneNumbers);
         String yesNo;
 
         while (true) {
@@ -38,7 +35,7 @@ public class ContactControllerImpl {
 
             if (yesNo.equalsIgnoreCase("y")) {
 
-                this.phoneNumbers.createPhoneNumbers(phoneNumbers);
+                this.phoneNumbersImpl.createPhoneNumbers(phoneNumbers);
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
 
@@ -80,10 +77,6 @@ public class ContactControllerImpl {
 
                 System.out.print("\u001B[34m" + "Input company name  -> ");
                 company = in.nextLine();
-                while (!Validators.checkNameSize(company)) {
-                    System.out.print("Company's name max size is 20 character. Input again ->");
-                    company = in.next();
-                }
                 break;
 
             } else if (!yesNo.equalsIgnoreCase("n")) {
@@ -121,7 +114,7 @@ public class ContactControllerImpl {
     }
 
 
-    public void modify(Map<String, Contact> map, Map<EmailType, Set<String>> emails, Map<PhoneNumberType, Set<String>> phoneNumbers) {
+    public void modify(Map<String, Contact> map) {
 
         Map<String, Contact> map1 = new TreeMap<>(map);
 
@@ -143,221 +136,119 @@ public class ContactControllerImpl {
         ApplicationController.printUpdateType();
 
         System.out.println("\u001B[34m" + "Choose number of operation which do you want to update?");
-        int choice;
+        String choice;
 
-        try {
+        boolean choiceType = true;
 
-            choice = in.nextInt();
+        while (choiceType) {
+
+            choice = in.next();
 
             switch (choice) {
-                case 0:
-                    System.out.println("\u001B[34m" + "Input contact's new name. ->");
+
+                case "0":
+
+                    System.out.print("\u001B[34m" + "Input contact new name -> ");
                     String newName = in.next();
                     while (!Validators.checkNameSize(newName)) {
-                        System.out.print("Name's max size is 20 characters. Input again ->");
-                        newName = in.next();
+                        System.out.println("\u001B[31m" + "Name's max size is 20 characters. Input again -> ");
                     }
                     map.put(newName, map.get(name));
                     map.remove(name);
+
                     System.out.println("\u001B[36m" + "The contact's name is updated.");
                     break;
-                case 1:
-                    this.phoneNumbers.phoneNumberUpdate(name, map, phoneNumbers);
+
+                case "1":
+
+                    phoneNumbersImpl.phoneNumberUpdate(name, map);
                     System.out.println("\u001B[36m" + "The contact's phone number is updated.");
                     break;
-                case 2:
-                    System.out.println("\u001B[36m" + "If tou want delete ALL phone type input 0");
-                    System.out.println("\u001B[36m" + "If tou want delete phone number input 1");
 
-                    while (true) {
+                case "2":
 
-                        int del = in.nextInt();
+                    System.out.println(map.get(name).getPhoneNumbers());
+                    System.out.print("Choose phone numbers type");
+                    ApplicationController.printPhoneNumbersType();
 
-                        if (del == 0) {
+                    String typeNumber;
 
-                            ApplicationController.printPhoneNumbersType();
+                    boolean isType = true;
 
+                    while (isType) {
 
-                            while (true) {
-                                System.out.print(" \n-> ");
-                                int typeNumber;
+                        isType = false;
 
-                                try {
-                                    typeNumber = in.nextInt();
+                        System.out.print(" \n-> ");
 
-                                    switch (typeNumber) {
-                                        case 0:
-                                            if (!phoneNumbers.containsKey(PhoneNumberType.MOBILE)) {
-                                                phoneNumbers.remove(PhoneNumberType.MOBILE);
-                                            }
-                                            break;
-                                        case 1:
-                                            if (!phoneNumbers.containsKey(PhoneNumberType.HOME)) {
-                                                phoneNumbers.remove(PhoneNumberType.HOME);
-                                            }
-                                            break;
-                                        case 2:
-                                            if (!phoneNumbers.containsKey(PhoneNumberType.WORK)) {
-                                                phoneNumbers.remove(PhoneNumberType.WORK);
-                                            }
-                                            break;
-                                        case 3:
-                                            if (!phoneNumbers.containsKey(PhoneNumberType.SCHOOL)) {
-                                                phoneNumbers.remove(PhoneNumberType.SCHOOL);
-                                            }
-                                            break;
-                                        case 4:
-                                            if (!phoneNumbers.containsKey(PhoneNumberType.OTHER)) {
-                                                phoneNumbers.remove(PhoneNumberType.OTHER);
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("\u001B[31m" + "Invalid type number.");
-                                            continue;
-                                    }
-                                } catch (InputMismatchException ime) {
+                        typeNumber = in.next();
 
-                                    System.out.println("input number from 0 to 4");
-                                }
+                        switch (typeNumber) {
+                            case "0":
+
+                                this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.MOBILE, map, name);
                                 break;
-                            }
-
-                        } else if (del == 1) {
-
-                            System.out.println(phoneNumbers);
-                            System.out.print("Choose phone numbers type");
-                            ApplicationController.printPhoneNumbersType();
-
-                            while (true) {
-                                System.out.print(" \n-> ");
-                                int typeNumber;
-
-                                try {
-                                    typeNumber = in.nextInt();
-
-                                    switch (typeNumber) {
-                                        case 0:
-
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.MOBILE, map, phoneNumbers);
-                                            break;
-                                        case 1:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.HOME, map, phoneNumbers);
-                                            break;
-                                        case 2:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.WORK, map, phoneNumbers);
-                                            break;
-                                        case 3:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map, phoneNumbers);
-                                            break;
-                                        case 4:
-                                            this.phoneNumbers.deleteForPhoneNumber(PhoneNumberType.OTHER, map, phoneNumbers);
-                                            break;
-                                        default:
-                                            System.out.println("\u001B[31m" + "Invalid type number.");
-                                            continue;
-                                    }
-                                } catch (InputMismatchException ime) {
-
-                                    System.out.println("input number from 0 to 4");
-                                }
-
+                            case "1":
+                                this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.HOME, map, name);
                                 break;
-                            }
-
-                            break;
+                            case "2":
+                                this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.WORK, map, name);
+                                break;
+                            case "3":
+                                this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.SCHOOL, map, name);
+                                break;
+                            case "4":
+                                this.phoneNumbersImpl.deleteForPhoneNumber(PhoneNumberType.OTHER, map, name);
+                                break;
+                            default:
+                                System.out.println("\u001B[31m" + "Invalid type number.");
+                                isType = true;
                         }
                     }
-                case 3:
-                    emailController.emailUpdate(name, map, emails);
+
+                    break;
+
+                case "3":
+
+                    emailController.emailUpdate(name, map);
                     System.out.println("\u001B[36m" + "The contact's email is updated.");
                     break;
-                case 4:
-                    System.out.println("\u001B[36m" + "If tou want delete ALL email typ input 0");
-                    System.out.println("\u001B[36m" + "If tou want delete email input 1");
 
-                    while (true) {
+                case "4":
+                    System.out.println(map.get(name).getEmails());
+                    System.out.print("Choose email type");
+                    ApplicationController.printEmailType();
 
-                        int del = in.nextInt();
+                    isType = true;
 
-                        if (del == 0) {
+                    while (isType) {
 
-                            ApplicationController.printEmailType();
+                        isType = false;
 
-                            while (true) {
-                                System.out.print(" \n-> ");
-                                int typeEmail;
+                        System.out.print(" \n-> ");
 
-                                try {
-                                    typeEmail = in.nextInt();
+                        typeNumber = in.next();
 
-                                    switch (typeEmail) {
-                                        case 0:
-                                            if (!emails.containsKey(EmailType.GMAIL)) {
-                                                emails.remove(EmailType.GMAIL);
-                                            }
-                                            break;
-                                        case 1:
-                                            if (!emails.containsKey(EmailType.ICLOUD)) {
-                                                emails.remove(EmailType.ICLOUD);
-                                            }
-                                            break;
-                                        case 2:
-                                            if (!emails.containsKey(EmailType.OTHER)) {
-                                                emails.remove(EmailType.OTHER);
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("\u001B[31m" + "Invalid type number.");
-                                            continue;
-                                    }
-                                } catch (InputMismatchException ime) {
-
-                                    System.out.println("input number from 0 to 4");
-                                }
+                        switch (typeNumber) {
+                            case "0":
+                                emailController.deleteForEmail(EmailType.GMAIL, map, name);
                                 break;
-                            }
-
-                        } else if (del == 1) {
-
-                            System.out.println(emails);
-                            System.out.print("Choose email type");
-                            ApplicationController.printEmailType();
-
-                            while (true) {
-                                System.out.print(" \n-> ");
-                                int typeNumber;
-
-                                try {
-                                    typeNumber = in.nextInt();
-
-                                    switch (typeNumber) {
-                                        case 0:
-                                            emailController.deleteForEmail(EmailType.GMAIL, map, emails);
-                                            break;
-                                        case 1:
-                                            emailController.deleteForEmail(EmailType.ICLOUD, map, emails);
-                                            break;
-                                        case 2:
-                                            emailController.deleteForEmail(EmailType.OTHER, map, emails);
-                                            break;
-
-                                        default:
-                                            System.out.println("\u001B[31m" + "Invalid type number.");
-                                            continue;
-                                    }
-                                } catch (InputMismatchException ime) {
-
-                                    System.out.println("input number from 0 to 4");
-                                }
-
+                            case "1":
+                                emailController.deleteForEmail(EmailType.ICLOUD, map, name);
                                 break;
-                            }
-                            break;
+                            case "2":
+                                emailController.deleteForEmail(EmailType.OTHER, map, name);
+                                break;
+
+                            default:
+                                System.out.println("\u001B[31m" + "Invalid type number.");
+                                isType = true;
                         }
-                    }
 
+                    }
                     break;
-                case 5:
+
+                case "5":
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
                     String newCompany = in.next();
                     while (!Validators.checkNameSize(newCompany)) {
@@ -367,18 +258,14 @@ public class ContactControllerImpl {
                     company = newCompany;
                     System.out.println("\u001B[36m" + "The contact's company name is updated.");
                     break;
-                case 6:
+
+                case "6":
                     System.out.println("\u001B[34m" + "Input company's new name. ->");
-                    String company = in.next();
-                    company = null;
-                    break;
-                default:
-                    System.out.println("\u001B[31m" + "Invalid choice. Input right number!");
+                    name = in.next();
+                    map.get(name).setCompany("");
+                    System.out.println("The company's name is deleted!");
                     break;
             }
-        } catch (InputMismatchException ime) {
-
-            System.out.println("input number from 0 to 4");
         }
     }
 
